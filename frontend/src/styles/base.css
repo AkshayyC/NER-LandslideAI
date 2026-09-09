@@ -1,0 +1,176 @@
+/* ============ reset & base ============ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-0);
+  background:
+    radial-gradient(1100px 700px at 88% -12%, rgba(76, 194, 255, 0.055), transparent 62%),
+    radial-gradient(900px 640px at -8% 108%, rgba(139, 124, 246, 0.05), transparent 60%),
+    var(--bg-0);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* fine engineering grid over the page */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(148, 170, 210, 0.033) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 170, 210, 0.033) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.12));
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+img,
+svg {
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-strong);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+::selection {
+  background: rgba(76, 194, 255, 0.28);
+}
+
+/* scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 170, 210, 0.22) transparent;
+}
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(148, 170, 210, 0.2);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ============ typography utilities ============ */
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -0.01em;
+}
+
+.dim {
+  color: var(--text-2);
+}
+
+.small {
+  font-size: 12px;
+}
+
+.prose {
+  color: var(--text-1);
+  font-size: 13px;
+  margin: 0 0 10px;
+  max-width: 72ch;
+}
+.prose:last-child {
+  margin-bottom: 0;
+}
+.prose strong {
+  color: var(--text-0);
+  font-weight: 600;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 200;
+  background: var(--bg-3);
+  color: var(--text-0);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+}
+.skip-link:focus {
+  left: 8px;
+}
+
+.mini-caption {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 12px 0 8px;
+}
+
+.panel-footnote {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.provenance-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}

@@ -1,0 +1,330 @@
+/* ============ map shell ============ */
+.map-shell {
+  position: relative;
+  height: 100%;
+  min-height: 380px;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.map-canvas {
+  height: 100%;
+  width: 100%;
+  background: #070c15;
+  outline: none;
+  font-family: var(--font-sans);
+}
+
+/* leaflet chrome → command-center dark */
+.leaflet-container {
+  background: #070c15;
+  font-family: var(--font-sans);
+}
+
+.leaflet-control-zoom {
+  border: 1px solid var(--line-strong) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-pop) !important;
+}
+
+.leaflet-control-zoom a {
+  background: rgba(10, 15, 26, 0.92) !important;
+  color: var(--text-1) !important;
+  border-bottom: 1px solid var(--line) !important;
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.leaflet-control-zoom a:last-child {
+  border-bottom: none !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: rgba(20, 29, 48, 0.95) !important;
+  color: var(--accent) !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(7, 11, 20, 0.82) !important;
+  color: var(--text-3) !important;
+  font-size: 9.5px !important;
+  padding: 2px 8px !important;
+  border-top-left-radius: 6px;
+}
+
+.leaflet-control-attribution a {
+  color: var(--text-2) !important;
+}
+
+.leaflet-tooltip {
+  background: rgba(10, 15, 26, 0.95) !important;
+  border: 1px solid var(--line-strong) !important;
+  color: var(--text-0) !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  box-shadow: var(--shadow-pop) !important;
+}
+
+.leaflet-tooltip::before {
+  display: none !important;
+}
+
+/* ============ reference markers (state centers) ============ */
+.ref-marker-wrap {
+  background: transparent !important;
+  border: none !important;
+}
+
+.ref-marker {
+  display: block;
+  width: 9px;
+  height: 9px;
+  margin: 0 auto;
+  transform: rotate(45deg);
+  background: rgba(10, 15, 26, 0.9);
+  border: 1.6px solid rgba(76, 194, 255, 0.95);
+  box-shadow: 0 0 10px rgba(76, 194, 255, 0.5);
+  transition: transform var(--t-fast);
+}
+
+.ref-marker-wrap:hover .ref-marker {
+  transform: rotate(45deg) scale(1.35);
+}
+
+.ref-marker__label {
+  display: block;
+  margin: 4px 0 0 -50%;
+  width: max-content;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--text-1);
+  background: rgba(7, 11, 20, 0.85);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.ref-marker__label b {
+  color: var(--accent);
+  margin-right: 5px;
+  font-weight: 600;
+}
+
+/* ============ inventory markers (backend data only) ============ */
+.inv-marker-wrap {
+  background: transparent !important;
+  border: none !important;
+}
+
+.inv-marker {
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 1px auto;
+  border-radius: 50%;
+  background: rgba(139, 124, 246, 0.95);
+  border: 1.6px solid rgba(233, 238, 251, 0.85);
+  box-shadow: 0 0 10px rgba(139, 124, 246, 0.75), 0 0 3px rgba(0, 0, 0, 0.6);
+  transition: transform var(--t-fast);
+}
+
+.inv-marker-wrap:hover .inv-marker {
+  transform: scale(1.4);
+}
+
+/* ============ picked location marker ============ */
+.pick-marker-wrap {
+  background: transparent !important;
+  border: none !important;
+}
+
+.pick-marker {
+  display: block;
+  width: 22px;
+  height: 22px;
+  margin: 2px auto;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 3px rgba(76, 194, 255, 0.25), 0 0 18px rgba(76, 194, 255, 0.55);
+  animation: pickPulse 2s ease-out infinite;
+}
+
+.pick-marker::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+@keyframes pickPulse {
+  0% {
+    box-shadow: 0 0 0 3px rgba(76, 194, 255, 0.3), 0 0 18px rgba(76, 194, 255, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(76, 194, 255, 0), 0 0 18px rgba(76, 194, 255, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 3px rgba(76, 194, 255, 0.3), 0 0 18px rgba(76, 194, 255, 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pick-marker {
+    animation: none;
+  }
+}
+
+/* ============ legend overlay ============ */
+.map-legend {
+  position: absolute;
+  left: 12px;
+  bottom: 14px;
+  z-index: 600;
+  width: 236px;
+  background: rgba(7, 11, 20, 0.88);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 11px 13px 9px;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-pop);
+  pointer-events: auto;
+}
+
+.map-legend__title {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+.map-legend__section {
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 8px 0 5px;
+}
+
+.map-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  color: var(--text-1);
+  margin-bottom: 4px;
+}
+
+.map-legend__pending {
+  font-style: normal;
+  color: var(--warn);
+  font-size: 9.5px;
+}
+
+.map-legend__count {
+  font-style: normal;
+  color: var(--text-2);
+}
+
+.legend__swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.legend__symbol {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.legend__symbol--ref {
+  transform: rotate(45deg) scale(0.8);
+  background: rgba(10, 15, 26, 0.9);
+  border: 1.6px solid rgba(76, 194, 255, 0.95);
+}
+
+.legend__symbol--inv {
+  border-radius: 50%;
+  background: rgba(139, 124, 246, 0.95);
+  border: 1.4px solid rgba(233, 238, 251, 0.85);
+}
+
+.legend__symbol--pick {
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  position: relative;
+}
+
+.legend__symbol--pick::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.map-legend__note {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.map-legend__attrib {
+  margin-top: 6px;
+  font-size: 8.5px;
+  color: var(--text-3);
+}
+
+@media (max-width: 720px) {
+  .map-legend {
+    width: 200px;
+    left: 8px;
+    bottom: 8px;
+  }
+}
+
+/* map inspect chip (command center) */
+.map-inspect {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(7, 11, 20, 0.88);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 7px 10px;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-pop);
+  font-size: 11px;
+  color: var(--text-0);
+}
+
+/* cursor coordinate readout */
+.map-readout {
+  position: absolute;
+  right: 12px;
+  bottom: 14px;
+  z-index: 600;
+  background: rgba(7, 11, 20, 0.88);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 10.5px;
+  color: var(--text-1);
+  backdrop-filter: blur(8px);
+}
