@@ -1,0 +1,75 @@
+/* ============================================================
+   NER-LandslideAI — design tokens
+   Dark GIS command-center theme: deep navy surfaces, cyan data
+   accent, restrained severity palette, IBM Plex typography.
+   ============================================================ */
+
+:root {
+  /* surfaces */
+  --bg-0: #05080f;
+  --bg-1: #0a0f1a;
+  --bg-2: #0e1524;
+  --bg-3: #141d30;
+  --glass-hi: rgba(17, 25, 42, 0.82);
+  --glass-lo: rgba(10, 15, 26, 0.88);
+
+  /* lines */
+  --line: rgba(148, 170, 210, 0.14);
+  --line-strong: rgba(148, 170, 210, 0.28);
+
+  /* text */
+  --text-0: #e9eefb;
+  --text-1: #adb9d2;
+  --text-2: #7484a3;
+  --text-3: #4d5b76;
+
+  /* accents */
+  --accent: #4cc2ff;
+  --accent-strong: #7dd3ff;
+  --accent-dim: rgba(76, 194, 255, 0.13);
+  --accent-border: rgba(76, 194, 255, 0.4);
+
+  /* data-class colors */
+  --c-historical: #8b7cf6;
+  --c-susceptibility: #4cc2ff;
+  --c-trigger: #f5b544;
+  --c-current: #f0645f;
+
+  /* severity */
+  --sev-low: #3ddc97;
+  --sev-moderate: #e8c547;
+  --sev-high: #f59e0b;
+  --sev-critical: #f4574d;
+
+  /* status */
+  --ok: #3ddc97;
+  --warn: #f5b544;
+  --danger: #f4574d;
+
+  /* type */
+  --font-sans: 'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* geometry */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-xs: 5px;
+
+  /* elevation */
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 14px 34px rgba(2, 5, 12, 0.42);
+  --shadow-pop: 0 18px 44px rgba(2, 5, 12, 0.6);
+
+  /* motion */
+  --t-fast: 0.14s ease;
+  --t-med: 0.22s ease;
+
+  --sidebar-w: 232px;
+  --sidebar-w-collapsed: 62px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 0s;
+    --t-med: 0s;
+  }
+}
