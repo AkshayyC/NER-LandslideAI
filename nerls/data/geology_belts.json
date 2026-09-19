@@ -1,0 +1,83 @@
+{
+  "provenance": {
+    "title": "Generalised geological / geomorphological belts of the North Eastern Region",
+    "kind": "compiled_reference",
+    "description": "Six generalised belts used to give the hazard engine a rock-mass credibility term. Boundaries follow published regional geological maps (GSI / ONGC syntheses) at a coarse level of detail: they are axis-aligned envelopes of the belt extents, not surveyed polygons.",
+    "accuracy": "Belt assignment is indicative to roughly 10-25 km. `erodibility` is an expert-assigned relative index (0-1) for landslide-prone material behaviour under monsoon rainfall, not a geotechnical parameter.",
+    "references": [
+      "GSI, Geology and Mineral Resources of the North Eastern Region (Misc. Publ.)",
+      "Nandy, D.R. (2001) Geodynamics of Northeastern India and the adjoining region"
+    ]
+  },
+  "erodibility_note": "Weights reflect known landslide behaviour: Neogene molasse and ophiolite/melange belts fail most readily; stable granitic and plateau basalt terrain fails least. Values are relative within this region.",
+  "belts": [
+    {
+      "id": "higher_himalaya",
+      "name": "Higher / Tethyan Himalaya",
+      "erodibility": 0.82,
+      "note": "High-grade metamorphics and Tethyan sediments, glacially over-steepened; rock-avalanche and debris-flow dominated.",
+      "envelopes": [
+        [27.6, 29.6, 91.4, 97.5],
+        [27.3, 28.2, 88.0, 88.95]
+      ]
+    },
+    {
+      "id": "lesser_himalaya",
+      "name": "Lesser Himalaya",
+      "erodibility": 0.88,
+      "note": "Low-grade phyllite, schist and quartzite with deep weathered profiles; the classic monsoon landslide belt.",
+      "envelopes": [
+        [26.9, 28.1, 91.5, 97.3],
+        [27.0, 27.9, 88.0, 88.95]
+      ]
+    },
+    {
+      "id": "siwalik_foothills",
+      "name": "Siwalik / Sub-Himalayan foothills",
+      "erodibility": 0.92,
+      "note": "Weakly cemented Neogene sandstone-conglomerate; among the highest recorded shallow-landslide densities in India.",
+      "envelopes": [
+        [26.6, 27.4, 91.3, 96.5],
+        [26.6, 27.3, 88.2, 89.0]
+      ]
+    },
+    {
+      "id": "shillong_plateau",
+      "name": "Shillong Plateau (Garo-Khasi-Jaintia)",
+      "erodibility": 0.74,
+      "note": "Archaean gneiss and intrusive granite capped by laterite; failure is controlled by jointing and the plateau edge scarp.",
+      "envelopes": [
+        [25.0, 26.2, 89.7, 92.85]
+      ]
+    },
+    {
+      "id": "fold_belt",
+      "name": "Indo-Burma fold belt (Naga-Chin-Arakan, Barail, Tripura-Mizoram)",
+      "erodibility": 0.9,
+      "note": "Turbiditic flysch (Barail, Surma, Tipam) with ophiolite melange; rapid tectonic uplift and very high relative relief.",
+      "envelopes": [
+        [21.9, 27.1, 92.3, 95.3],
+        [24.0, 25.6, 92.7, 93.5]
+      ]
+    },
+    {
+      "id": "brahmaputra_alluvium",
+      "name": "Brahmaputra / Barak alluvial plains",
+      "erodibility": 0.28,
+      "note": "Recent alluvium of the valley floors. Flood and bank-erosion dominated; slope-driven landsliding is rare except at terrace edges.",
+      "envelopes": [
+        [25.75, 27.85, 89.5, 95.6],
+        [24.15, 25.05, 92.2, 93.05]
+      ]
+    }
+  ],
+  "precedence": [
+    "brahmaputra_alluvium",
+    "siwalik_foothills",
+    "lesser_himalaya",
+    "higher_himalaya",
+    "shillong_plateau",
+    "fold_belt"
+  ],
+  "precedence_note": "Overlapping envelopes are resolved in the listed order, so the narrow valley floors are not absorbed by the broader fold-belt envelope."
+}

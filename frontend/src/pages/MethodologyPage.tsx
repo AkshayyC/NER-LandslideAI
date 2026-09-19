@@ -1,254 +1,165 @@
-import {
-  ArrowDown,
-  BookOpen,
-  CloudRain,
-  Gem,
-  MapPin,
-  Mountain,
-  Route,
-  Shovel,
-  TreePine,
-  Waves,
-} from 'lucide-react';
-import { PageHeader } from '../components/common/PageHeader';
 import { Panel } from '../components/common/Panel';
+import { PageHeader } from '../components/common/PageHeader';
 import { DataClassTag } from '../components/common/DataClassTag';
-import { DATA_CLASS_LIST } from '../constants/dataClasses';
+import { KeyValue } from '../components/common/KeyValue';
+import { SeverityBadge } from '../components/common/SeverityBadge';
+import { ErrorState, LoadingRows, OfflineNotice } from '../components/common/states';
+import { useApiData } from '../hooks/useApiData';
+import { useSystemStatus } from '../context/SystemStatusContext';
+import { getMethodology } from '../services/api';
+import { SEVERITY_ORDER, SEVERITY_META } from '../constants/dataClasses';
+import { formatIndex } from '../utils/format';
 
-const SOURCES: Array<{ icon: typeof MapPin; name: string; detail: string }> = [
-  {
-    icon: MapPin,
-    name: 'GSI landslide inventory',
-    detail: 'Documented historical landslide events — location, date where available, event attributes. Provides positive examples and historical context.',
-  },
-  {
-    icon: Mountain,
-    name: 'Terrain / DEM',
-    detail: 'Elevation and derived slope, aspect and other terrain characteristics representing geometric susceptibility.',
-  },
-  {
-    icon: CloudRain,
-    name: 'Rainfall',
-    detail: 'Rainfall amounts with observation date/time and location — event and antecedent conditions associated with landsliding.',
-  },
-  {
-    icon: Gem,
-    name: 'Geology',
-    detail: 'Lithology and structural context where reliable layers are available.',
-  },
-  {
-    icon: Shovel,
-    name: 'Soil',
-    detail: 'Soil type/properties as a conditioning factor for slope failure.',
-  },
-  {
-    icon: TreePine,
-    name: 'Land cover & vegetation',
-    detail: 'Cover type and vegetation state influencing slope stability.',
-  },
-  {
-    icon: Waves,
-    name: 'Hydrology / drainage',
-    detail: 'Drainage characteristics and related hydrological context.',
-  },
-  {
-    icon: Route,
-    name: 'Roads & settlements',
-    detail: 'Proximity to infrastructure — both a susceptibility factor and the reason inventory coverage is uneven.',
-  },
-];
-
-/** MODULE 08 — the full methodology narrative: sources → features →
- * susceptibility + trigger → risk intelligence, with the four data classes
- * kept strictly apart. */
+/** Module 09 — the definitions, straight from the running model. */
 export function MethodologyPage() {
+  const { apiStatus } = useSystemStatus();
+  const online = apiStatus === 'online';
+  const methodology = useApiData(online ? (s) => getMethodology(s) : null, [], { enabled: online });
+
+  const data = methodology.data;
+  const bands = (data?.severity_bands ?? {}) as Record<string, string | number>;
+  const uncertainty = (data?.uncertainty ?? {}) as Record<string, string>;
+
   return (
-    <div className="page">
+    <div className="stack">
       <PageHeader
-        module="08"
-        kicker="METHODOLOGY"
-        title="From evidence to risk intelligence"
-        description="How NER-LandslideAI is designed to work end-to-end — and which parts are live, pending, or planned. Content mirrors docs/methodology.md and docs/data_sources.md."
-        tags={
-          <>
-            <DataClassTag dc="historical" stateLabel="PAST" />
-            <DataClassTag dc="susceptibility" stateLabel="STATIC" />
-            <DataClassTag dc="trigger" />
-            <DataClassTag dc="current" />
-          </>
-        }
+        module="09"
+        kicker="Reference"
+        title="Methodology"
+        description="The model's own definition of its terms: what the index is, how the trigger ratio is formed, how the severity bands are cut, and how uncertainty is reported."
+        tags={data ? <span className="chip mono">{data.model_id}</span> : null}
       />
 
-      <Panel kicker="PIPELINE" title="Data sources → risk intelligence" flush>
-        <div className="flow">
-          <div className="flow__stage">
-            <div className="flow__stage-title mono">STAGE 1 · EVIDENCE & CONTEXT</div>
-            <div className="src-grid">
-              {SOURCES.map((s) => {
-                const Icon = s.icon;
-                return (
-                  <div className="src-card" key={s.name}>
-                    <div className="src-card__icon">
-                      <Icon size={15} aria-hidden="true" />
-                    </div>
-                    <div>
-                      <div className="src-card__name">{s.name}</div>
-                      <div className="src-card__desc">{s.detail}</div>
-                    </div>
+      {apiStatus === 'offline' && <OfflineNotice />}
+
+      {online && (
+        <>
+          {methodology.loading && <Panel><LoadingRows rows={6} label="Reading methodology" /></Panel>}
+          {methodology.error && <Panel><ErrorState error={methodology.error} onRetry={methodology.refetch} /></Panel>}
+
+          {data && (
+            <>
+              <Panel kicker="Index" title="What the susceptibility index is" tools={<DataClassTag dc="susceptibility" state="live" />}>
+                <p className="prose mono formula">{data.index_transform.form}</p>
+                <p className="prose">{data.index_transform.note}</p>
+                <KeyValue
+                  items={[
+                    { key: 'Gate', value: data.index_transform.gate },
+                    { key: 'Percentile fixing', value: data.index_transform.percentile_fixing },
+                    { key: 'Low anchor (raw)', value: formatIndex(data.index_transform.detail.raw_fit_low) },
+                    { key: 'High anchor (raw)', value: formatIndex(data.index_transform.detail.raw_fit_high) },
+                    { key: 'Scale', value: data.index_transform.detail.scale.toFixed(4) },
+                    { key: 'Constant', value: data.index_transform.detail.constant.toFixed(4) },
+                  ]}
+                />
+              </Panel>
+
+              <div className="grid-2">
+                <Panel kicker="Trigger" title="Rainfall ratio and risk">
+                  <table className="thr thr--left">
+                    <tbody>
+                      {Object.entries(data.trigger).map(([key, value]) => (
+                        <tr key={key}>
+                          <td>{key.replace(/_/g, ' ')}</td>
+                          <td className="prose mono">{value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </Panel>
+
+                <Panel kicker="Severity" title="Band definitions">
+                  <div className="row band-row">
+                    {SEVERITY_ORDER.map((category) => (
+                      <span key={category} className="band-chip">
+                        <SeverityBadge category={category} compact />
+                        <span className="mono dim">
+                          {bands[category] !== undefined ? String(bands[category]) : SEVERITY_META[category].label}
+                        </span>
+                      </span>
+                    ))}
                   </div>
-                );
-              })}
-            </div>
-          </div>
+                  {bands.note && <div className="data-note">{String(bands.note)}</div>}
+                  {!bands.note && (
+                    <div className="data-note">
+                      Bands are ordinal cuts on the relative index. A class is not a probability, and no return period is
+                      implied.
+                    </div>
+                  )}
+                </Panel>
+              </div>
 
-          <div className="flow__arrow" aria-hidden="true">
-            <ArrowDown size={18} />
-          </div>
+              <div className="grid-2">
+                <Panel kicker="Uncertainty" title="How σ is derived">
+                  {Object.entries(uncertainty).length > 0 ? (
+                    <table className="thr thr--left">
+                      <tbody>
+                        {Object.entries(uncertainty).map(([key, value]) => (
+                          <tr key={key}>
+                            <td>{key.replace(/_/g, ' ')}</td>
+                            <td className="prose">{value}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p className="prose dim">The backend did not report an uncertainty block for this build.</p>
+                  )}
+                </Panel>
 
-          <div className="flow__stage">
-            <div className="flow__stage-title mono">STAGE 2 · FEATURE ENGINEERING</div>
-            <div className="pipeline-node">
-              <div className="pipeline-node__title">Feature construction — src/features/</div>
-              <ul className="pipeline-node__list">
-                <li>terrain derivatives: slope, aspect from DEM</li>
-                <li>rainfall windows: event + antecedent accumulations</li>
-                <li>environmental layers harmonised to a common grid/CRS</li>
-                <li>background (non-landslide) sample construction</li>
-              </ul>
-            </div>
-          </div>
+                <Panel kicker="Factors" title="Weighted terms">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Factor</th>
+                        <th className="num">Weight</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.factors.map((factor) => (
+                        <tr key={factor.id}>
+                          <td>
+                            {factor.label}
+                            <span className="table__sub mono">{factor.id}</span>
+                          </td>
+                          <td className="num">{factor.weight.toFixed(2)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </Panel>
+              </div>
 
-          <div className="flow__arrow" aria-hidden="true">
-            <ArrowDown size={18} />
-          </div>
+              <Panel kicker="Provenance" title="Inputs and their standing">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Layer</th>
+                      <th>Standing</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.entries(data.provenance).map(([key, value]) => (
+                      <tr key={key}>
+                        <td className="mono">{key}</td>
+                        <td className="prose small">{typeof value === 'string' ? value : JSON.stringify(value)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Panel>
 
-          <div className="flow__split">
-            <div className="flow__stage">
-              <div className="flow__stage-title mono">STAGE 3A · SUSCEPTIBILITY</div>
-              <div className="pipeline-node pipeline-node--sus">
-                <div className="pipeline-node__title">Susceptibility model (Random Forest / XGBoost)</div>
-                <ul className="pipeline-node__list">
-                  <li>spatially/temporally validated training</li>
-                  <li>probability of landslide-prone conditions</li>
-                  <li>STATIC — spatial predisposition only</li>
+              <Panel kicker="Limitations" title="Stated by the model itself">
+                <ul className="limit-list">
+                  {data.limitations.map((limitation) => (
+                    <li key={limitation}>{limitation}</li>
+                  ))}
                 </ul>
-                <div className="pipeline-node__status">
-                  <DataClassTag dc="susceptibility" />
-                </div>
-              </div>
-            </div>
-            <div className="flow__stage">
-              <div className="flow__stage-title mono">STAGE 3B · RAINFALL TRIGGER</div>
-              <div className="pipeline-node pipeline-node--pending">
-                <div className="pipeline-node__title">Rainfall trigger module</div>
-                <ul className="pipeline-node__list">
-                  <li>event + antecedent rainfall vs calibrated thresholds</li>
-                  <li>modulates susceptibility in time</li>
-                </ul>
-                <div className="pipeline-node__status">
-                  <DataClassTag dc="trigger" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flow__arrow" aria-hidden="true">
-            <ArrowDown size={18} />
-          </div>
-
-          <div className="flow__stage">
-            <div className="flow__stage-title mono">STAGE 4 · RISK INTELLIGENCE</div>
-            <div className="pipeline-node pipeline-node--risk">
-              <div className="pipeline-node__title">Risk engine + early warning — src/risk_engine/</div>
-              <ul className="pipeline-node__list">
-                <li>probability + context → LOW / MODERATE / HIGH / CRITICAL</li>
-                <li>trigger-aware, time-specific interpretation</li>
-                <li>operational use only after validation & review</li>
-              </ul>
-              <div className="pipeline-node__status">
-                <DataClassTag dc="current" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </Panel>
-
-      <Panel kicker="DEFINITIONS" title="The four classes — and how they differ">
-        <div className="grid grid--4">
-          {DATA_CLASS_LIST.map((dc) => (
-            <div className="class-def" key={dc.key} style={{ '--class-color': dc.color } as React.CSSProperties}>
-              <div className="class-def__head">
-                <DataClassTag dc={dc.key} />
-              </div>
-              <div className="class-def__tagline">{dc.tagline}</div>
-              <p className="class-def__desc">{dc.description}</p>
-              <div className="class-def__status mono">{dc.statusLabel}</div>
-            </div>
-          ))}
-        </div>
-        <div className="table-wrap">
-          <table className="table table--classes">
-            <thead>
-              <tr>
-                <th>Question</th>
-                <th>Historical</th>
-                <th>Susceptibility</th>
-                <th>Trigger</th>
-                <th>Current / Forecast</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>What it answers</td>
-                <td>“Where have landslides been recorded?”</td>
-                <td>“How prone is this place?”</td>
-                <td>“Is the rain condition present now?”</td>
-                <td>“What is the risk in this window?”</td>
-              </tr>
-              <tr>
-                <td>Time domain</td>
-                <td>Past</td>
-                <td>Static (spatial)</td>
-                <td>Now / recent</td>
-                <td>Now / next hours–days</td>
-              </tr>
-              <tr>
-                <td>Status here</td>
-                <td>Backend data</td>
-                <td>Backend data</td>
-                <td colSpan={2} className="mono">
-                  PENDING — NOT OPERATIONAL
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </Panel>
-
-      <Panel kicker="DATA QUALITY" title="Every input is assessed before use">
-        <p className="prose">
-          Per <span className="mono">docs/data_sources.md</span>, each dataset entering the pipeline is
-          evaluated for spatial coverage, temporal coverage, spatial and temporal resolution, missing
-          values, coordinate reference system, and licensing/usage restrictions. Layers that fail the
-          bar are excluded — they are never replaced by synthetic substitutes.
-        </p>
-        <div className="provenance-chips">
-          <span className="chip">
-            <BookOpen size={12} aria-hidden="true" /> registry: docs/data_sources.md
-          </span>
-          <span className="chip">model spec: docs/methodology.md</span>
-          <span className="chip">pipeline code: src/data · src/features · src/models · src/risk_engine</span>
-        </div>
-      </Panel>
-
-      <Panel kicker="DISCLAIMER" title="Status of this platform">
-        <p className="prose">
-          NER-LandslideAI is a research/hackathon prototype. It is <strong>not an operational
-          emergency-warning system</strong>, and its outputs should not independently determine
-          evacuation or emergency decisions. Susceptibility values are model estimates for research;
-          alerting remains disabled until the rainfall trigger module is integrated and validated.
-        </p>
-      </Panel>
+              </Panel>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 }

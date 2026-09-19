@@ -1,7 +1,4 @@
-numpy
-pandas
-scikit-learn
-matplotlib
-jupyter
-xgboost
-joblib
+# Runtime dependencies. Development extras are listed in pyproject.toml.
+numpy>=1.24
+fastapi>=0.110
+uvicorn[standard]>=0.27

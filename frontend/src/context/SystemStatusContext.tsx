@@ -1,10 +1,9 @@
 /**
- * Global backend connectivity status.
+ * Backend connectivity state, shared by every page.
  *
- * Polls GET /api/health every 30 s and exposes the result to every page so the
- * UI can render explicit ONLINE / OFFLINE / CHECKING states. When the backend
- * is offline, pages gate their data queries and show professional offline
- * states — the UI never substitutes fabricated data.
+ * Polls GET /api/health every 30 s and exposes ONLINE / CHECKING / OFFLINE.
+ * When the engine is unreachable the pages render an explicit offline state —
+ * the UI never substitutes plausible-looking numbers.
  */
 import {
   createContext,
@@ -17,29 +16,24 @@ import {
 } from 'react';
 import type { ReactNode } from 'react';
 import { getHealth } from '../services/api';
-import { API_BASE_URL } from '../services/client';
-import type { ApiStatus, HealthSummary } from '../types/api';
+import { API_DISPLAY_URL } from '../services/client';
+import type { ApiStatus, Health } from '../types/api';
 
 const POLL_INTERVAL_MS = 30_000;
 
 interface SystemStatusValue {
   apiStatus: ApiStatus;
-  health: HealthSummary | null;
+  health: Health | null;
   lastChecked: Date | null;
   baseUrl: string;
-  /** Force an immediate health check. */
   recheck: () => void;
 }
 
 const SystemStatusContext = createContext<SystemStatusValue | null>(null);
 
-interface ProviderProps {
-  children: ReactNode;
-}
-
-export function SystemStatusProvider({ children }: ProviderProps) {
+export function SystemStatusProvider({ children }: { children: ReactNode }) {
   const [apiStatus, setApiStatus] = useState<ApiStatus>('checking');
-  const [health, setHealth] = useState<HealthSummary | null>(null);
+  const [health, setHealth] = useState<Health | null>(null);
   const [lastChecked, setLastChecked] = useState<Date | null>(null);
   const busyRef = useRef(false);
 
@@ -47,8 +41,7 @@ export function SystemStatusProvider({ children }: ProviderProps) {
     if (busyRef.current) return;
     busyRef.current = true;
     try {
-      const h = await getHealth();
-      setHealth(h);
+      setHealth(await getHealth());
       setApiStatus('online');
     } catch {
       setHealth(null);
@@ -66,7 +59,13 @@ export function SystemStatusProvider({ children }: ProviderProps) {
   }, [check]);
 
   const value = useMemo<SystemStatusValue>(
-    () => ({ apiStatus, health, lastChecked, baseUrl: API_BASE_URL, recheck: () => void check() }),
+    () => ({
+      apiStatus,
+      health,
+      lastChecked,
+      baseUrl: API_DISPLAY_URL,
+      recheck: () => void check(),
+    }),
     [apiStatus, health, lastChecked, check],
   );
 

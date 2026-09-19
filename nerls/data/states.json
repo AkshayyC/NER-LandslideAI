@@ -1,0 +1,82 @@
+{
+  "provenance": {
+    "title": "NER states reference table",
+    "kind": "compiled_reference",
+    "description": "Administrative reference for the eight states of the North Eastern Region of India. Areas are Survey of India published values; populations are Census of India 2011 (state totals, published).",
+    "accuracy": "Administrative fields are exact published values. Bounding boxes are approximate envelopes used only to place the grid."
+  },
+  "states": [
+    {
+      "code": "AR",
+      "name": "Arunachal Pradesh",
+      "capital": "Itanagar",
+      "area_km2": 83743,
+      "population_2011": 1383727,
+      "bbox": [26.62, 29.48, 91.55, 97.42],
+      "terrain_summary": "Eastern Himalaya; Siang, Subansiri, Kameng and Lohit basins. Elevation range ~90 m to >6,000 m."
+    },
+    {
+      "code": "AS",
+      "name": "Assam",
+      "capital": "Dispur",
+      "area_km2": 78438,
+      "population_2011": 31205576,
+      "bbox": [24.13, 27.98, 89.68, 96.02],
+      "terrain_summary": "Brahmaputra valley floor (35-120 m) flanked by Himalayan foothills to the north and the Karbi Anglong / Barail ranges to the south; Barak valley in the south-east."
+    },
+    {
+      "code": "MN",
+      "name": "Manipur",
+      "capital": "Imphal",
+      "area_km2": 22327,
+      "population_2011": 2855794,
+      "bbox": [23.83, 25.70, 92.97, 94.78],
+      "terrain_summary": "Central Imphal valley (~780 m) ringed by the Manipur Hills; Naga and Chin hill ranges on the east."
+    },
+    {
+      "code": "ML",
+      "name": "Meghalaya",
+      "capital": "Shillong",
+      "area_km2": 22429,
+      "population_2011": 2966889,
+      "bbox": [25.03, 26.13, 89.78, 92.80],
+      "terrain_summary": "Shillong Plateau and Garo-Khasi-Jaintia hills, 200-1,965 m, incised by deep south-flowing gorges."
+    },
+    {
+      "code": "MZ",
+      "name": "Mizoram",
+      "capital": "Aizawl",
+      "area_km2": 21081,
+      "population_2011": 1097206,
+      "bbox": [21.94, 24.53, 92.26, 93.46],
+      "terrain_summary": "North-south trending Mizo hills (500-2,000 m), steep flysch ridges with very high relative relief."
+    },
+    {
+      "code": "NL",
+      "name": "Nagaland",
+      "capital": "Kohima",
+      "area_km2": 16579,
+      "population_2011": 1978502,
+      "bbox": [25.18, 27.04, 93.32, 95.25],
+      "terrain_summary": "Naga Hills on the Assam-Arakan fold belt; steep shaley ridges 200-3,841 m (Mount Saramati)."
+    },
+    {
+      "code": "SK",
+      "name": "Sikkim",
+      "capital": "Gangtok",
+      "area_km2": 7096,
+      "population_2011": 610577,
+      "bbox": [27.07, 28.13, 88.01, 88.92],
+      "terrain_summary": "Steepest elevation gradient in India: 280 m at the Teesta exit to 8,586 m at Kangchenjunga over ~80 km."
+    },
+    {
+      "code": "TR",
+      "name": "Tripura",
+      "capital": "Agartala",
+      "area_km2": 10486,
+      "population_2011": 3673917,
+      "bbox": [22.94, 24.55, 91.15, 92.33],
+      "terrain_summary": "Low north-south anticlinal hill ranges (15-930 m) surrounded by alluvial plains of the Haora, Gomati and Manu rivers."
+    }
+  ]
+}

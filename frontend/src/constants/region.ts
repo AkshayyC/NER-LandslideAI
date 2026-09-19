@@ -1,44 +1,43 @@
 /**
- * Static reference data for the target region.
+ * Geographic constants for the North Eastern Region.
  *
- * Source: README.md / docs/data_sources.md — the eight states of the
- * Northeastern Region (NER) of India. This is the project's declared region of
- * interest, not scientific data.
- *
- * `approxCenter` values are approximate geographic centers of each state used
- * ONLY as map navigation reference markers. They are NOT landslide inventory
- * points and must never be presented as data.
+ * The map draws a vector base (region outline + district headquarters read
+ * from the API) instead of fetching raster tiles, so the console works on a
+ * network with no access to external map services and never shows a broken
+ * grey tile grid.
  */
 
-export interface NerState {
-  name: string;
+/** [south, west] x [north, east] of the modelled envelope, from the backend. */
+export const NER_BBOX: [[number, number], [number, number]] = [
+  [21.8, 87.9],
+  [29.6, 97.6],
+];
+
+/** Map view used when a page has nothing specific to frame. */
+export const NER_CENTER: [number, number] = [25.9, 93.2];
+export const NER_DEFAULT_ZOOM = 6;
+
+export interface StateAnchor {
   code: string;
-  approxCenter: [number, number]; // [lat, lon] — navigation reference only
+  name: string;
+  /** Approximate administrative centre — a navigation aid, never a data point. */
+  latitude: number;
+  longitude: number;
 }
 
-export const NER_STATES: NerState[] = [
-  { name: 'Arunachal Pradesh', code: 'AR', approxCenter: [28.2, 94.7] },
-  { name: 'Assam', code: 'AS', approxCenter: [26.2, 92.9] },
-  { name: 'Manipur', code: 'MN', approxCenter: [24.7, 93.9] },
-  { name: 'Meghalaya', code: 'ML', approxCenter: [25.5, 91.4] },
-  { name: 'Mizoram', code: 'MZ', approxCenter: [23.2, 92.9] },
-  { name: 'Nagaland', code: 'NL', approxCenter: [26.1, 94.5] },
-  { name: 'Sikkim', code: 'SK', approxCenter: [27.6, 88.5] },
-  { name: 'Tripura', code: 'TR', approxCenter: [23.8, 91.7] },
+export const STATE_ANCHORS: StateAnchor[] = [
+  { code: 'AR', name: 'Arunachal Pradesh', latitude: 27.9, longitude: 94.6 },
+  { code: 'AS', name: 'Assam', latitude: 26.3, longitude: 92.6 },
+  { code: 'MN', name: 'Manipur', latitude: 24.7, longitude: 93.9 },
+  { code: 'ML', name: 'Meghalaya', latitude: 25.5, longitude: 91.2 },
+  { code: 'MZ', name: 'Mizoram', latitude: 23.3, longitude: 92.9 },
+  { code: 'NL', name: 'Nagaland', latitude: 26.1, longitude: 94.5 },
+  { code: 'SK', name: 'Sikkim', latitude: 27.5, longitude: 88.5 },
+  { code: 'TR', name: 'Tripura', latitude: 23.8, longitude: 91.6 },
 ];
 
-/** Rough bounding box of the NER (lat/lon) used to frame the map. */
-export const NER_BBOX: [[number, number], [number, number]] = [
-  [21.7, 87.9], // southwest
-  [28.7, 97.6], // northeast
+/** Grid envelope limits, as [lat, lon] pairs used by Leaflet. */
+export const ENVELOPE_BOUNDS: [[number, number], [number, number]] = [
+  [21.82, 87.92],
+  [29.58, 97.58],
 ];
-
-/** Broad region-of-interest band shown as a hint in the Location Analysis form. */
-export const NER_LAT_RANGE: [number, number] = [21.7, 28.7];
-export const NER_LON_RANGE: [number, number] = [87.9, 97.6];
-
-/** Basemap tiles (CARTO dark, built on OpenStreetMap data). */
-export const BASEMAP_URL =
-  'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-export const BASEMAP_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a>';

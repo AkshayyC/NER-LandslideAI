@@ -1,0 +1,162 @@
+{
+  "provenance": {
+    "title": "Reference catalogue of major landslide events in the North Eastern Region",
+    "kind": "compiled_reference",
+    "description": "A short, deliberately conservative catalogue of major, publicly documented landslide or landslide-generating events. It is NOT a landslide inventory: a survey inventory has hundreds to thousands of individually mapped polygons. This catalogue exists so that the historical-evidence layer has real, checkable content on a fresh checkout, and is merged with (and outweighed by) any imported GSI/institutional inventory.",
+    "accuracy": "Each event is tied to a named district rather than a mapped polygon, so `lat`/`lon` are the event area's reference point. Dates follow the published record; where the published record gives a range, the date is the principal reported day. `confidence` is `documented` where a published post-event study exists and `reported` where the event appears in the contemporary record but no detailed study was consulted.",
+    "references": [
+      "Oldham, R.D. (1899) Report on the Great Earthquake of 12th June 1897",
+      "GSI records of the 15th August 1950 Assam-Tibet earthquake",
+      "Post-event landslide inventories for the 18th September 2011 Sikkim earthquake",
+      "CWC / state government and district administration reports for the June 2022 Assam-Meghalaya event",
+      "NDMA and Sikkim state reports on the 4th October 2023 South Lhonak GLOF"
+    ]
+  },
+  "confidence_weight": {"documented": 1.0, "reported": 0.6},
+  "trigger_classes": ["earthquake", "rainfall", "glof", "cyclone"],
+  "events": [
+    {
+      "id": "ev-1897-shillong",
+      "date": "1897-06-12",
+      "place": "Shillong Plateau (Khasi and Jaintia hills)",
+      "district": "East Khasi Hills",
+      "state": "ML",
+      "trigger": "earthquake",
+      "magnitude_note": "Mw 8.1 Great Shillong Earthquake",
+      "confidence": "documented",
+      "summary": "Synchronous landsliding over the whole plateau: rockfalls, debris slides and blocking of the Umiam and other valley floors. The largest single landslide event on record in the region, and the reason the plateau's scarps remain unstable today."
+    },
+    {
+      "id": "ev-1950-subansiri",
+      "date": "1950-08-15",
+      "place": "Subansiri and Siang valleys",
+      "district": "Upper Subansiri",
+      "state": "AR",
+      "trigger": "earthquake",
+      "magnitude_note": "Mw 8.6 Assam-Tibet Earthquake",
+      "confidence": "documented",
+      "summary": "Hundreds of rock avalanches and debris slides across the eastern Himalaya. River courses were dammed and then burst, and hillslopes left unconsolidated were reported to fail in subsequent monsoons."
+    },
+    {
+      "id": "ev-1950-brahmaputra",
+      "date": "1950-08-15",
+      "place": "Upper Brahmaputra valley margin (Sadiya, Dhemaji)",
+      "district": "Dhemaji",
+      "state": "AS",
+      "trigger": "earthquake",
+      "magnitude_note": "Mw 8.6 Assam-Tibet Earthquake",
+      "confidence": "documented",
+      "summary": "Foothill slope failure and bank collapse on the Brahmaputra margin, with the aggradation of the river by landslide sediment as a secondary hazard."
+    },
+    {
+      "id": "ev-1968-teesta",
+      "date": "1968-10-04",
+      "place": "Teesta and Rangit valleys",
+      "district": "Gyalshing",
+      "state": "SK",
+      "trigger": "rainfall",
+      "magnitude_note": "Cloudburst rainfall over the Sikkim-Darjeeling Himalaya",
+      "confidence": "reported",
+      "summary": "A multi-day rainstorm in early October 1968 produced widespread slope failure and debris flow in the Teesta and Rangit catchments. The exact principal day is not consistently reported, hence the `reported` grade."
+    },
+    {
+      "id": "ev-2011-sikkim-north",
+      "date": "2011-09-18",
+      "place": "North Sikkim (Mangan, Chungthang, Lachung)",
+      "district": "Mangan",
+      "state": "SK",
+      "trigger": "earthquake",
+      "magnitude_note": "Mw 6.9 Sikkim Earthquake",
+      "confidence": "documented",
+      "summary": "More than three hundred landslides were mapped after the event in the Teesta basin. NH-10 was severed at multiple points and the Lachung and Lachen valleys were cut off."
+    },
+    {
+      "id": "ev-2011-sikkim-east",
+      "date": "2011-09-18",
+      "place": "East Sikkim (Gangtok, Ranipool, Rangpo)",
+      "district": "Gangtok",
+      "state": "SK",
+      "trigger": "earthquake",
+      "magnitude_note": "Mw 6.9 Sikkim Earthquake",
+      "confidence": "documented",
+      "summary": "Co-seismic rockfalls and shallow debris slides on cut slopes around the state capital; the cause of most of the event's casualties through building collapse under slope failure."
+    },
+    {
+      "id": "ev-2020-dima-hasao",
+      "date": "2020-06-20",
+      "place": "Dima Hasao (New Haflong, Jatinga)",
+      "district": "Dima Hasao",
+      "state": "AS",
+      "trigger": "rainfall",
+      "magnitude_note": "Prolonged pre-monsoon rainfall",
+      "confidence": "reported",
+      "summary": "A long June rain spell triggered slope failures on the hill road and rail alignments through the Barail range, closing the Guwahati-Silchar route for days."
+    },
+    {
+      "id": "ev-2021-yaas",
+      "date": "2021-05-27",
+      "place": "Meghalaya plateau scarp (Ri Bhoi, West Khasi Hills)",
+      "district": "Ri Bhoi",
+      "state": "ML",
+      "trigger": "cyclone",
+      "magnitude_note": "Remnant rainfall of Cyclone Yaas",
+      "confidence": "reported",
+      "summary": "Pre-monsoon cyclonic rainfall on already saturated ground produced slope failures along the Guwahati-Shillong and Shillong-Silchar corridors."
+    },
+    {
+      "id": "ev-2022-dima-hasao",
+      "date": "2022-06-16",
+      "place": "Dima Hasao (New Haflong, Umrangso, Maibang)",
+      "district": "Dima Hasao",
+      "state": "AS",
+      "trigger": "rainfall",
+      "magnitude_note": "Record June rainfall over the Barail range",
+      "confidence": "documented",
+      "summary": "The most severe road-closure event of the last decade in Assam: landslides cut both the hill road alignment and the Lumding-Badarpur rail line, isolating Dima Hasao for weeks and forcing a long diversion via the Barak valley."
+    },
+    {
+      "id": "ev-2022-meghalaya",
+      "date": "2022-06-17",
+      "place": "Meghalaya escarpment (Sohra, Jowai, Nongpoh)",
+      "district": "West Jaintia Hills",
+      "state": "ML",
+      "trigger": "rainfall",
+      "magnitude_note": "Extreme June rainfall totals on the plateau scarp",
+      "confidence": "documented",
+      "summary": "Sustained monsoon rainfall re-activated multiple scarp failures, blocking the Shillong-Silchar road and flooding the low ground below the escarpment."
+    },
+    {
+      "id": "ev-2022-barak",
+      "date": "2022-06-19",
+      "place": "Barak valley (Silchar, Karimganj, Hailakandi)",
+      "district": "Cachar",
+      "state": "AS",
+      "trigger": "rainfall",
+      "magnitude_note": "Monsoon flooding with hillslope failure",
+      "confidence": "documented",
+      "summary": "The Barak valley's worst flood in living memory combined with slope failures in the adjoining Barail and Mizo foothills, cutting both road and rail access to the valley."
+    },
+    {
+      "id": "ev-2023-lhonak",
+      "date": "2023-10-04",
+      "place": "South Lhonak GLOF, North Sikkim (Chungthang, Mangan, Dikchu)",
+      "district": "Mangan",
+      "state": "SK",
+      "trigger": "glof",
+      "magnitude_note": "Glacial lake outburst flood on the South Lhonak lake",
+      "confidence": "documented",
+      "summary": "A glacial lake outburst sent a debris flow down the Teesta, destroying the Chungthang dam and cutting NH-10 at numerous points by both the flow itself and associated slope failures. The clearest recent demonstration that hazard in the region is not rainfall-only."
+    },
+    {
+      "id": "ev-2024-sikkim-monsoon",
+      "date": "2024-06-13",
+      "place": "Sikkim (Gangtok, Ranipool, Singtam)",
+      "district": "Gangtok",
+      "state": "SK",
+      "trigger": "rainfall",
+      "magnitude_note": "Early monsoon rainfall on slopes left unstable by the 2023 GLOF",
+      "confidence": "reported",
+      "summary": "Landslides and debris flows during the first major monsoon spell after the GLOF, on slopes whose toe support had been removed the previous October."
+    }
+  ]
+}
