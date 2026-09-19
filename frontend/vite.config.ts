@@ -9,6 +9,14 @@ export default defineConfig({
     port: 5173,
     // Allow access via the sandbox preview proxy host.
     allowedHosts: true,
+    // The console talks to the API on its own origin. In development the API
+    // is proxied here, which also means no cross-origin request ever happens.
+    proxy: {
+      '/api': {
+        target: process.env.VITE_DEV_API_TARGET ?? 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     host: true,

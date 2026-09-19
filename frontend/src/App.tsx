@@ -1,13 +1,14 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppShell } from './components/layout/AppShell';
 import { SystemStatusProvider } from './context/SystemStatusContext';
 import { CommandCenter } from './pages/CommandCenter';
-import { RiskMapPage } from './pages/RiskMapPage';
+import { HazardMap } from './pages/HazardMap';
 import { LocationAnalysis } from './pages/LocationAnalysis';
-import { HistoricalAnalytics } from './pages/HistoricalAnalytics';
 import { DistrictIntelligence } from './pages/DistrictIntelligence';
+import { Lifelines } from './pages/Lifelines';
+import { Evidence } from './pages/Evidence';
+import { Watchlist } from './pages/Watchlist';
 import { ModelInsights } from './pages/ModelInsights';
-import { AlertsPage } from './pages/AlertsPage';
 import { MethodologyPage } from './pages/MethodologyPage';
 import { NotFound } from './pages/NotFound';
 
@@ -17,13 +18,18 @@ export default function App() {
       <Routes>
         <Route element={<AppShell />}>
           <Route index element={<CommandCenter />} />
-          <Route path="map" element={<RiskMapPage />} />
+          <Route path="map" element={<HazardMap />} />
           <Route path="location" element={<LocationAnalysis />} />
-          <Route path="history" element={<HistoricalAnalytics />} />
           <Route path="districts" element={<DistrictIntelligence />} />
+          <Route path="districts/:state/:district" element={<DistrictIntelligence />} />
+          <Route path="lifelines" element={<Lifelines />} />
+          <Route path="evidence" element={<Evidence />} />
+          <Route path="watchlist" element={<Watchlist />} />
           <Route path="model" element={<ModelInsights />} />
-          <Route path="alerts" element={<AlertsPage />} />
           <Route path="methodology" element={<MethodologyPage />} />
+          {/* Former module names kept alive as redirects so old links resolve. */}
+          <Route path="history" element={<Navigate to="/evidence" replace />} />
+          <Route path="alerts" element={<Navigate to="/watchlist" replace />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

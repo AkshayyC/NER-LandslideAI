@@ -1,75 +1,91 @@
-/* ============================================================
-   NER-LandslideAI — design tokens
-   Dark GIS command-center theme: deep navy surfaces, cyan data
-   accent, restrained severity palette, IBM Plex typography.
-   ============================================================ */
+/**
+ * Design tokens.
+ *
+ * A flat, high-contrast operations palette: one saturated accent, a stepped
+ * severity ramp, and neutral surfaces. No gradients anywhere — every surface is
+ * a single colour with a hairline border, which is what keeps the console
+ * looking like field software rather than a dashboard template.
+ */
 
 :root {
-  /* surfaces */
-  --bg-0: #05080f;
-  --bg-1: #0a0f1a;
-  --bg-2: #0e1524;
-  --bg-3: #141d30;
-  --glass-hi: rgba(17, 25, 42, 0.82);
-  --glass-lo: rgba(10, 15, 26, 0.88);
+  /* Surfaces (darkest → lightest) */
+  --bg-0: #070a11;
+  --bg-1: #0b1017;
+  --bg-2: #10161f;
+  --bg-3: #151d28;
+  --bg-4: #1b2532;
 
-  /* lines */
-  --line: rgba(148, 170, 210, 0.14);
-  --line-strong: rgba(148, 170, 210, 0.28);
+  /* Hairlines */
+  --line-1: #1d2836;
+  --line-2: #27344493;
+  --line-strong: #35465c;
 
-  /* text */
-  --text-0: #e9eefb;
-  --text-1: #adb9d2;
-  --text-2: #7484a3;
-  --text-3: #4d5b76;
+  /* Text */
+  --text-0: #e8eef6;
+  --text-1: #b8c4d4;
+  --text-2: #8b99ac;
+  --text-3: #63718a;
 
-  /* accents */
+  /* Accent */
   --accent: #4cc2ff;
-  --accent-strong: #7dd3ff;
-  --accent-dim: rgba(76, 194, 255, 0.13);
-  --accent-border: rgba(76, 194, 255, 0.4);
+  --accent-dim: #2b7fa8;
+  --accent-ink: #06202e;
 
-  /* data-class colors */
-  --c-historical: #8b7cf6;
+  /* Data classes */
+  --c-historical: #9b8cff;
   --c-susceptibility: #4cc2ff;
   --c-trigger: #f5b544;
   --c-current: #f0645f;
 
-  /* severity */
+  /* Severity ramp (ordinal, stepped) */
   --sev-low: #3ddc97;
   --sev-moderate: #e8c547;
   --sev-high: #f59e0b;
   --sev-critical: #f4574d;
 
-  /* status */
+  /* Status */
   --ok: #3ddc97;
-  --warn: #f5b544;
+  --warn: #e8c547;
   --danger: #f4574d;
 
-  /* type */
-  --font-sans: 'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  /* Type */
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SFMono-Regular", ui-monospace, "JetBrains Mono", "Cascadia Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
 
-  /* geometry */
-  --radius: 12px;
-  --radius-sm: 8px;
-  --radius-xs: 5px;
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-22: 22px;
+  --fs-28: 28px;
 
-  /* elevation */
-  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 14px 34px rgba(2, 5, 12, 0.42);
-  --shadow-pop: 0 18px 44px rgba(2, 5, 12, 0.6);
+  --lh-tight: 1.25;
+  --lh-normal: 1.5;
 
-  /* motion */
-  --t-fast: 0.14s ease;
-  --t-med: 0.22s ease;
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.14em;
 
-  --sidebar-w: 232px;
-  --sidebar-w-collapsed: 62px;
-}
+  /* Space */
+  --sp-1: 4px;
+  --sp-2: 6px;
+  --sp-3: 10px;
+  --sp-4: 14px;
+  --sp-5: 18px;
+  --sp-6: 24px;
+  --sp-7: 32px;
 
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --t-fast: 0s;
-    --t-med: 0s;
-  }
+  --radius-1: 3px;
+  --radius-2: 5px;
+  --radius-3: 8px;
+
+  --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 6px 20px rgba(0, 0, 0, 0.35);
+
+  --sidebar-w: 236px;
+  --topbar-h: 46px;
+
+  --transition: 120ms ease;
 }

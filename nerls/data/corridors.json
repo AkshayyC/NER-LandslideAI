@@ -1,0 +1,231 @@
+{
+  "provenance": {
+    "title": "Critical landslide-exposed corridors of the North Eastern Region",
+    "kind": "compiled_reference",
+    "description": "Lifeline road and rail corridors whose closure isolates districts or states. Each corridor is a waypoint chain through named settlements on the route; the centreline is indicative. `criticality` (1-3) is an expert judgement of how much of the region loses access when the corridor fails.",
+    "accuracy": "Waypoints sit on named settlements, accurate to about 0.05 deg. Intermediate alignments are straight lines between waypoints, so the corridor is a generalised centreline, not the surveyed road.",
+    "references": [
+      "National Highways and Infrastructure Development Corporation corridor descriptions",
+      "State PWD / NHAI route descriptions and published post-event road closure reports"
+    ]
+  },
+  "criticality_scale": {
+    "3": "Failure severs a state capital or isolates whole districts; no practical alternative route.",
+    "2": "Failure forces a long detour or cuts a district from its main market and hospital.",
+    "1": "Failure causes local disruption with an adequate alternative."
+  },
+  "corridors": [
+    {
+      "id": "sikkim_nh10",
+      "name": "Rangpo - Singtam - Gangtok - Mangan - Chungthang",
+      "mode": "road",
+      "states": ["SK"],
+      "criticality": 3,
+      "note": "NH-10, the only all-weather lifeline for East and North Sikkim, running along the Teesta gorge below unstable valley-side slopes. The 2023 South Lhonak flood destroyed it at Chungthang and cut it at several points between Mangan and Singtam.",
+      "waypoints": [
+        [27.18, 88.53, "Rangpo"],
+        [27.23, 88.50, "Singtam"],
+        [27.33, 88.61, "Gangtok"],
+        [27.40, 88.55, "Dikchu"],
+        [27.51, 88.53, "Mangan"],
+        [27.61, 88.65, "Chungthang"],
+        [27.69, 88.75, "Lachung"]
+      ]
+    },
+    {
+      "id": "shillong_silchar",
+      "name": "Shillong - Jowai - Khliehriat - Badarpur - Silchar",
+      "mode": "road",
+      "states": ["ML", "AS"],
+      "criticality": 3,
+      "note": "The freight and passenger spine between the Shillong plateau and the Barak valley, and the main road link onward to Mizoram. The descent from Khliehriat through the Jaintia scarp has repeated monsoon closures.",
+      "waypoints": [
+        [25.57, 91.88, "Shillong"],
+        [25.45, 92.20, "Jowai"],
+        [25.40, 92.37, "Khliehriat"],
+        [25.10, 92.50, "Ratacherra"],
+        [24.87, 92.55, "Badarpur"],
+        [24.82, 92.80, "Silchar"]
+      ]
+    },
+    {
+      "id": "guwahati_shillong",
+      "name": "Guwahati - Jorabat - Nongpoh - Umiam - Shillong",
+      "mode": "road",
+      "states": ["AS", "ML"],
+      "criticality": 3,
+      "note": "Carries almost all fuel, food and freight onto the plateau. The Jorabat-Nongpoh climb is the section most often blocked by slope failures.",
+      "waypoints": [
+        [26.14, 91.74, "Guwahati"],
+        [26.10, 91.87, "Jorabat"],
+        [25.90, 91.88, "Nongpoh"],
+        [25.66, 91.90, "Umiam"],
+        [25.57, 91.88, "Shillong"]
+      ]
+    },
+    {
+      "id": "silchar_imphal",
+      "name": "Silchar - Jiribam - Noney - Imphal",
+      "mode": "road",
+      "states": ["AS", "MN"],
+      "criticality": 3,
+      "note": "NH-37. The Jiribam-Imphal hill section crosses the Barail and Manipur hills and is the principal western road access to Manipur; closures of a week or more are routine in the monsoon.",
+      "waypoints": [
+        [24.82, 92.80, "Silchar"],
+        [24.80, 93.12, "Jiribam"],
+        [24.75, 93.35, "Nungba"],
+        [24.85, 93.70, "Noney"],
+        [24.81, 93.94, "Imphal"]
+      ]
+    },
+    {
+      "id": "dimapur_kohima_imphal",
+      "name": "Dimapur - Kohima - Mao - Senapati - Imphal",
+      "mode": "road",
+      "states": ["NL", "MN"],
+      "criticality": 3,
+      "note": "NH-2, the second road link to Manipur and the main link between Nagaland's commercial capital and its own capital. Crosses the Naga hills with many cut-slope sections.",
+      "waypoints": [
+        [25.90, 93.73, "Dimapur"],
+        [25.67, 94.11, "Kohima"],
+        [25.53, 94.13, "Mao"],
+        [25.27, 94.02, "Senapati"],
+        [24.81, 93.94, "Imphal"]
+      ]
+    },
+    {
+      "id": "imphal_moreh",
+      "name": "Imphal - Kakching - Tengnoupal - Moreh",
+      "mode": "road",
+      "states": ["MN"],
+      "criticality": 2,
+      "note": "The Indian leg of the India-Myanmar-Thailand trilateral highway. Hill sections above Kakching fail regularly in the monsoon.",
+      "waypoints": [
+        [24.81, 93.94, "Imphal"],
+        [24.50, 93.98, "Kakching"],
+        [24.40, 94.20, "Tengnoupal"],
+        [24.32, 94.30, "Moreh"]
+      ]
+    },
+    {
+      "id": "aizawl_lunglei",
+      "name": "Aizawl - Seling - Thenzawl - Lunglei - Lawngtlai",
+      "mode": "road",
+      "states": ["MZ"],
+      "criticality": 3,
+      "note": "The north-south spine of Mizoram. It runs along the crest and flanks of steep flysch ridges; a single failure can isolate southern districts.",
+      "waypoints": [
+        [23.73, 92.72, "Aizawl"],
+        [23.40, 92.76, "Seling"],
+        [23.30, 92.75, "Thenzawl"],
+        [22.89, 92.73, "Lunglei"],
+        [22.53, 92.90, "Lawngtlai"]
+      ]
+    },
+    {
+      "id": "aizawl_silchar",
+      "name": "Aizawl - Kolasib - Vairengte - Silchar",
+      "mode": "road",
+      "states": ["MZ", "AS"],
+      "criticality": 3,
+      "note": "Mizoram's main link to the railhead at Silchar and onward to the rest of India. The Vairengte descent to the Barak plain is the critical section.",
+      "waypoints": [
+        [23.73, 92.72, "Aizawl"],
+        [24.22, 92.68, "Kolasib"],
+        [24.28, 92.75, "Vairengte"],
+        [24.82, 92.80, "Silchar"]
+      ]
+    },
+    {
+      "id": "tripura_trunk",
+      "name": "Agartala - Khowai - Ambassa - Kailashahar - Dharmanagar",
+      "mode": "road",
+      "states": ["TR"],
+      "criticality": 2,
+      "note": "Assam-Agartala national highway trunk across Tripura's north; crosses the Jampui and Longtharai ranges where cut slopes fail in the pre-monsoon.",
+      "waypoints": [
+        [23.83, 91.28, "Agartala"],
+        [24.06, 91.60, "Khowai"],
+        [23.94, 91.85, "Ambassa"],
+        [24.20, 91.98, "Manu"],
+        [24.33, 92.01, "Kailashahar"],
+        [24.37, 92.17, "Dharmanagar"]
+      ]
+    },
+    {
+      "id": "brahmaputra_trunk",
+      "name": "Guwahati - Nagaon - Jorhat - Dibrugarh - Tinsukia",
+      "mode": "road",
+      "states": ["AS"],
+      "criticality": 3,
+      "note": "NH-27 through the Brahmaputra valley: the region's principal artery. Mostly flood-exposed, but the Assam-Nagaon and Karbi Anglong hill margins produce slope failures that close it.",
+      "waypoints": [
+        [26.14, 91.74, "Guwahati"],
+        [26.35, 92.68, "Nagaon"],
+        [26.45, 93.10, "Jakhalabandha"],
+        [26.75, 94.22, "Jorhat"],
+        [27.47, 94.91, "Dibrugarh"],
+        [27.49, 95.36, "Tinsukia"]
+      ]
+    },
+    {
+      "id": "itanagar_nhlakhimpur",
+      "name": "Itanagar - Banderdewa - Gumto - North Lakhimpur",
+      "mode": "road",
+      "states": ["AR", "AS"],
+      "criticality": 2,
+      "note": "Links the Arunachal capital to the Brahmaputra valley; hill-cut sections between Banderdewa and Gumto fail in the monsoon.",
+      "waypoints": [
+        [27.10, 93.62, "Itanagar"],
+        [26.95, 93.85, "Banderdewa"],
+        [27.13, 93.95, "Gumto"],
+        [27.24, 94.10, "North Lakhimpur"]
+      ]
+    },
+    {
+      "id": "tezpur_tawang",
+      "name": "Tezpur - Bhalukpong - Bomdila - Dirang - Sela - Tawang",
+      "mode": "road",
+      "states": ["AS", "AR"],
+      "criticality": 3,
+      "note": "The only road to Tawang and the Kameng valley, climbing from the foothills to the 4,170 m Sela Pass. Repeated closures from monsoon slope failure and winter snow.",
+      "waypoints": [
+        [26.63, 92.80, "Tezpur"],
+        [27.03, 92.65, "Bhalukpong"],
+        [27.27, 92.41, "Bomdila"],
+        [27.35, 92.25, "Dirang"],
+        [27.50, 92.10, "Sela Pass"],
+        [27.59, 91.86, "Tawang"]
+      ]
+    },
+    {
+      "id": "trans_arunachal",
+      "name": "Pasighat - Roing - Tezu - Namsai - Margherita",
+      "mode": "road",
+      "states": ["AR", "AS"],
+      "criticality": 3,
+      "note": "Trans-Arunachal Highway: keeps the eastern Arunachal districts connected to each other and to Assam without a detour through Tibet-facing valleys.",
+      "waypoints": [
+        [28.07, 95.33, "Pasighat"],
+        [28.14, 95.85, "Roing"],
+        [27.92, 96.17, "Tezu"],
+        [27.67, 95.87, "Namsai"],
+        [27.29, 95.68, "Margherita"]
+      ]
+    },
+    {
+      "id": "rail_hill_section",
+      "name": "Lumding - New Haflong - Badarpur rail hill section",
+      "mode": "rail",
+      "states": ["AS"],
+      "criticality": 3,
+      "note": "The Barail range section of the Guwahati-Silchar rail route, with more than a dozen tunnels and long cutting faces. The 2022 monsoon severed it for months and forced a diversion through the Barak valley by road.",
+      "waypoints": [
+        [25.75, 93.17, "Lumding"],
+        [25.30, 93.10, "Langting"],
+        [25.13, 93.02, "New Haflong"],
+        [24.87, 92.55, "Badarpur"]
+      ]
+    }
+  ]
+}

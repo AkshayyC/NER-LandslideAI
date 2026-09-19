@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nerls"
+version = "2.0.0"
+description = "Landslide hazard, exposure and rainfall-trigger engine for North East India"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+dependencies = [
+  "numpy>=1.24",
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.27",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27"]
+# GeoTIFF elevation import (`nerls dem register`). Optional by design: the engine
+# runs on the shipped generalised terrain surface when this is absent.
+dem = ["rasterio>=1.3"]
+
+[project.scripts]
+nerls = "nerls.cli:main"
+
+[tool.setuptools]
+packages = ["nerls"]
+
+[tool.setuptools.package-data]
+nerls = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,798 @@
+{
+  "provenance": {
+    "title": "Terrain control points for the NER generalised elevation surface",
+    "kind": "compiled_reference",
+    "description": "Named places with published elevations, used to interpolate a generalised ~4.4 km elevation surface over the North Eastern Region. Point types: `summit` (peak), `pass` (mountain pass), `town` (settlement, including all district headquarters held in districts.json), `valley` (low point in a drainage or plain), `context` (a point outside NER, used only to anchor the interpolation on the far side of a border so that the escarpment and plain edges come out at the right height).",
+    "accuracy": "Summits and passes carry surveyed elevations (accurate to a few metres to ~50 m). Towns carry published municipal elevations (about +/-50 m in the plains, +/-150 m in the high Himalaya). Context points are given to about +/-100 m. Coordinates are the published position where one exists; interior peaks and plateau points are placed to about +/-0.05 deg. The interpolation smooths relief: local steepness from this surface is systematically under-estimated and is therefore used as a regional *index*, never as an engineering slope angle.",
+    "references": [
+      "Survey of India 1:50,000 topographical sheets",
+      "Published district and state gazetteers; India-WRIS elevation notes"
+    ]
+  },
+  "points": [
+    {
+      "name": "Kangchenjunga",
+      "type": "summit",
+      "lat": 27.702,
+      "lon": 88.147,
+      "elevation_m": 8586
+    },
+    {
+      "name": "Siniolchu",
+      "type": "summit",
+      "lat": 27.617,
+      "lon": 88.317,
+      "elevation_m": 6888
+    },
+    {
+      "name": "Pandim",
+      "type": "summit",
+      "lat": 27.583,
+      "lon": 88.233,
+      "elevation_m": 6691
+    },
+    {
+      "name": "Nathu La",
+      "type": "pass",
+      "lat": 27.387,
+      "lon": 88.831,
+      "elevation_m": 4310
+    },
+    {
+      "name": "Jelep La",
+      "type": "pass",
+      "lat": 27.367,
+      "lon": 88.867,
+      "elevation_m": 4267
+    },
+    {
+      "name": "Yumthang",
+      "type": "valley",
+      "lat": 27.783,
+      "lon": 88.7,
+      "elevation_m": 3564
+    },
+    {
+      "name": "Zuluk",
+      "type": "town",
+      "lat": 27.25,
+      "lon": 88.767,
+      "elevation_m": 2900
+    },
+    {
+      "name": "Lachen",
+      "type": "town",
+      "lat": 27.725,
+      "lon": 88.56,
+      "elevation_m": 2750
+    },
+    {
+      "name": "Lachung",
+      "type": "town",
+      "lat": 27.69,
+      "lon": 88.745,
+      "elevation_m": 2700
+    },
+    {
+      "name": "Ravangla",
+      "type": "town",
+      "lat": 27.3,
+      "lon": 88.367,
+      "elevation_m": 2150
+    },
+    {
+      "name": "Pelling",
+      "type": "town",
+      "lat": 27.3,
+      "lon": 88.233,
+      "elevation_m": 2150
+    },
+    {
+      "name": "Yuksom",
+      "type": "town",
+      "lat": 27.373,
+      "lon": 88.222,
+      "elevation_m": 1780
+    },
+    {
+      "name": "Chungthang",
+      "type": "town",
+      "lat": 27.605,
+      "lon": 88.65,
+      "elevation_m": 1700
+    },
+    {
+      "name": "Singtam",
+      "type": "town",
+      "lat": 27.23,
+      "lon": 88.5,
+      "elevation_m": 400
+    },
+    {
+      "name": "Rangpo",
+      "type": "town",
+      "lat": 27.18,
+      "lon": 88.53,
+      "elevation_m": 300
+    },
+    {
+      "name": "Jorethang",
+      "type": "town",
+      "lat": 27.133,
+      "lon": 88.283,
+      "elevation_m": 300
+    },
+    {
+      "name": "Teesta exit (Sikkim low)",
+      "type": "valley",
+      "lat": 27.05,
+      "lon": 88.45,
+      "elevation_m": 280
+    },
+    {
+      "name": "Kangto",
+      "type": "summit",
+      "lat": 27.867,
+      "lon": 92.467,
+      "elevation_m": 7060
+    },
+    {
+      "name": "Gorichen",
+      "type": "summit",
+      "lat": 27.783,
+      "lon": 92.367,
+      "elevation_m": 6488
+    },
+    {
+      "name": "Nyegyi Kansang",
+      "type": "summit",
+      "lat": 27.95,
+      "lon": 92.65,
+      "elevation_m": 7047
+    },
+    {
+      "name": "Sela Pass",
+      "type": "pass",
+      "lat": 27.5,
+      "lon": 92.1,
+      "elevation_m": 4170
+    },
+    {
+      "name": "Bum La",
+      "type": "pass",
+      "lat": 27.717,
+      "lon": 91.9,
+      "elevation_m": 4350
+    },
+    {
+      "name": "Dirang",
+      "type": "town",
+      "lat": 27.35,
+      "lon": 92.25,
+      "elevation_m": 1500
+    },
+    {
+      "name": "Mechuka",
+      "type": "town",
+      "lat": 28.6,
+      "lon": 94.083,
+      "elevation_m": 2165
+    },
+    {
+      "name": "Tuting",
+      "type": "town",
+      "lat": 28.983,
+      "lon": 94.883,
+      "elevation_m": 650
+    },
+    {
+      "name": "Mayodia Pass",
+      "type": "pass",
+      "lat": 28.217,
+      "lon": 95.9,
+      "elevation_m": 2655
+    },
+    {
+      "name": "Walong",
+      "type": "town",
+      "lat": 28.133,
+      "lon": 96.933,
+      "elevation_m": 1200
+    },
+    {
+      "name": "Hayuliang",
+      "type": "town",
+      "lat": 27.95,
+      "lon": 96.633,
+      "elevation_m": 800
+    },
+    {
+      "name": "Vijaynagar",
+      "type": "town",
+      "lat": 27.2,
+      "lon": 97.0,
+      "elevation_m": 1200
+    },
+    {
+      "name": "Namdapha",
+      "type": "valley",
+      "lat": 27.5,
+      "lon": 96.5,
+      "elevation_m": 700
+    },
+    {
+      "name": "Basar",
+      "type": "town",
+      "lat": 27.95,
+      "lon": 94.6,
+      "elevation_m": 600
+    },
+    {
+      "name": "Bhalukpong",
+      "type": "valley",
+      "lat": 27.03,
+      "lon": 92.65,
+      "elevation_m": 200
+    },
+    {
+      "name": "Sadiya",
+      "type": "valley",
+      "lat": 27.83,
+      "lon": 95.67,
+      "elevation_m": 150
+    },
+    {
+      "name": "Ledo",
+      "type": "town",
+      "lat": 27.55,
+      "lon": 95.75,
+      "elevation_m": 200
+    },
+    {
+      "name": "Barail Range crest",
+      "type": "summit",
+      "lat": 25.3,
+      "lon": 93.3,
+      "elevation_m": 1500
+    },
+    {
+      "name": "Umrangso",
+      "type": "valley",
+      "lat": 25.5,
+      "lon": 92.87,
+      "elevation_m": 550
+    },
+    {
+      "name": "Maibang",
+      "type": "valley",
+      "lat": 25.3,
+      "lon": 93.15,
+      "elevation_m": 350
+    },
+    {
+      "name": "Jatinga",
+      "type": "town",
+      "lat": 25.12,
+      "lon": 93.03,
+      "elevation_m": 800
+    },
+    {
+      "name": "Karbi Anglong crest",
+      "type": "summit",
+      "lat": 25.9,
+      "lon": 93.5,
+      "elevation_m": 900
+    },
+    {
+      "name": "Manas foothills",
+      "type": "valley",
+      "lat": 26.7,
+      "lon": 91.5,
+      "elevation_m": 100
+    },
+    {
+      "name": "Shillong Peak",
+      "type": "summit",
+      "lat": 25.533,
+      "lon": 91.867,
+      "elevation_m": 1965
+    },
+    {
+      "name": "Mawphlang",
+      "type": "town",
+      "lat": 25.45,
+      "lon": 91.75,
+      "elevation_m": 1800
+    },
+    {
+      "name": "Sohra (Cherrapunji)",
+      "type": "town",
+      "lat": 25.27,
+      "lon": 91.73,
+      "elevation_m": 1484
+    },
+    {
+      "name": "Mawsynram",
+      "type": "town",
+      "lat": 25.3,
+      "lon": 91.58,
+      "elevation_m": 1400
+    },
+    {
+      "name": "Nokrek Peak",
+      "type": "summit",
+      "lat": 25.467,
+      "lon": 90.283,
+      "elevation_m": 1412
+    },
+    {
+      "name": "Tura Peak",
+      "type": "summit",
+      "lat": 25.533,
+      "lon": 90.217,
+      "elevation_m": 872
+    },
+    {
+      "name": "Balpakram",
+      "type": "valley",
+      "lat": 25.283,
+      "lon": 90.833,
+      "elevation_m": 850
+    },
+    {
+      "name": "Dawki",
+      "type": "valley",
+      "lat": 25.183,
+      "lon": 92.017,
+      "elevation_m": 100
+    },
+    {
+      "name": "Garo plain margin",
+      "type": "valley",
+      "lat": 25.2,
+      "lon": 89.9,
+      "elevation_m": 40
+    },
+    {
+      "name": "Mount Saramati",
+      "type": "summit",
+      "lat": 25.75,
+      "lon": 95.033,
+      "elevation_m": 3841
+    },
+    {
+      "name": "Japfu Peak",
+      "type": "summit",
+      "lat": 25.533,
+      "lon": 94.1,
+      "elevation_m": 3048
+    },
+    {
+      "name": "Dzukou Valley",
+      "type": "valley",
+      "lat": 25.567,
+      "lon": 94.117,
+      "elevation_m": 2450
+    },
+    {
+      "name": "Pfutsero",
+      "type": "town",
+      "lat": 25.583,
+      "lon": 94.3,
+      "elevation_m": 2100
+    },
+    {
+      "name": "Meluri",
+      "type": "town",
+      "lat": 25.65,
+      "lon": 94.65,
+      "elevation_m": 1500
+    },
+    {
+      "name": "Mao",
+      "type": "pass",
+      "lat": 25.533,
+      "lon": 94.133,
+      "elevation_m": 1788
+    },
+    {
+      "name": "Moreh",
+      "type": "valley",
+      "lat": 24.317,
+      "lon": 94.3,
+      "elevation_m": 250
+    },
+    {
+      "name": "Shirui Hills",
+      "type": "summit",
+      "lat": 25.117,
+      "lon": 94.417,
+      "elevation_m": 2500
+    },
+    {
+      "name": "Loktak Lake",
+      "type": "valley",
+      "lat": 24.55,
+      "lon": 93.8,
+      "elevation_m": 769
+    },
+    {
+      "name": "Phawngpui (Blue Mountain)",
+      "type": "summit",
+      "lat": 22.6,
+      "lon": 93.033,
+      "elevation_m": 2157
+    },
+    {
+      "name": "Reiek",
+      "type": "summit",
+      "lat": 23.6,
+      "lon": 92.6,
+      "elevation_m": 1548
+    },
+    {
+      "name": "Mamit west low",
+      "type": "valley",
+      "lat": 23.9,
+      "lon": 92.3,
+      "elevation_m": 200
+    },
+    {
+      "name": "Jampui Hills",
+      "type": "summit",
+      "lat": 24.0,
+      "lon": 92.25,
+      "elevation_m": 930
+    },
+    {
+      "name": "Tripura plain",
+      "type": "valley",
+      "lat": 23.5,
+      "lon": 91.4,
+      "elevation_m": 15
+    },
+    {
+      "name": "Siliguri",
+      "type": "context",
+      "lat": 26.72,
+      "lon": 88.42,
+      "elevation_m": 122
+    },
+    {
+      "name": "Jalpaiguri",
+      "type": "context",
+      "lat": 26.52,
+      "lon": 88.72,
+      "elevation_m": 75
+    },
+    {
+      "name": "Sylhet",
+      "type": "context",
+      "lat": 24.9,
+      "lon": 91.87,
+      "elevation_m": 20
+    },
+    {
+      "name": "Sunamganj",
+      "type": "context",
+      "lat": 25.07,
+      "lon": 91.4,
+      "elevation_m": 15
+    },
+    {
+      "name": "Netrokona",
+      "type": "context",
+      "lat": 24.87,
+      "lon": 90.73,
+      "elevation_m": 18
+    },
+    {
+      "name": "Mymensingh",
+      "type": "context",
+      "lat": 24.75,
+      "lon": 90.4,
+      "elevation_m": 20
+    },
+    {
+      "name": "Brahmanbaria",
+      "type": "context",
+      "lat": 23.96,
+      "lon": 91.11,
+      "elevation_m": 12
+    },
+    {
+      "name": "Comilla",
+      "type": "context",
+      "lat": 23.46,
+      "lon": 91.18,
+      "elevation_m": 15
+    },
+    {
+      "name": "Rangamati",
+      "type": "context",
+      "lat": 22.65,
+      "lon": 92.2,
+      "elevation_m": 60
+    },
+    {
+      "name": "Bandarban",
+      "type": "context",
+      "lat": 22.2,
+      "lon": 92.22,
+      "elevation_m": 50
+    },
+    {
+      "name": "Srimangal",
+      "type": "context",
+      "lat": 24.3,
+      "lon": 91.73,
+      "elevation_m": 30
+    },
+    {
+      "name": "Kohima valley low",
+      "type": "valley",
+      "lat": 25.9,
+      "lon": 93.65,
+      "elevation_m": 150
+    },
+    {
+      "name": "Barak plain",
+      "type": "valley",
+      "lat": 24.7,
+      "lon": 92.7,
+      "elevation_m": 25
+    },
+    {
+      "name": "Brahmaputra mid-course",
+      "type": "valley",
+      "lat": 26.6,
+      "lon": 93.5,
+      "elevation_m": 70
+    },
+    {
+      "name": "Hmuifang",
+      "type": "summit",
+      "lat": 23.45,
+      "lon": 92.75,
+      "elevation_m": 1619
+    },
+    {
+      "name": "Durtlang Hills",
+      "type": "summit",
+      "lat": 23.8,
+      "lon": 92.73,
+      "elevation_m": 1400
+    },
+    {
+      "name": "Tlawng valley",
+      "type": "valley",
+      "lat": 23.9,
+      "lon": 92.65,
+      "elevation_m": 150
+    },
+    {
+      "name": "Kaladan valley",
+      "type": "valley",
+      "lat": 22.6,
+      "lon": 92.85,
+      "elevation_m": 200
+    },
+    {
+      "name": "Ngengpui",
+      "type": "valley",
+      "lat": 22.5,
+      "lon": 92.75,
+      "elevation_m": 400
+    },
+    {
+      "name": "Vantawng",
+      "type": "valley",
+      "lat": 22.95,
+      "lon": 92.8,
+      "elevation_m": 500
+    },
+    {
+      "name": "Atharamura range",
+      "type": "summit",
+      "lat": 23.8,
+      "lon": 91.7,
+      "elevation_m": 480
+    },
+    {
+      "name": "Baramura range",
+      "type": "summit",
+      "lat": 23.9,
+      "lon": 91.45,
+      "elevation_m": 250
+    },
+    {
+      "name": "Longtharai range",
+      "type": "summit",
+      "lat": 23.95,
+      "lon": 92.0,
+      "elevation_m": 700
+    },
+    {
+      "name": "Haora valley",
+      "type": "valley",
+      "lat": 23.7,
+      "lon": 91.5,
+      "elevation_m": 30
+    },
+    {
+      "name": "Koubru peak",
+      "type": "summit",
+      "lat": 25.05,
+      "lon": 93.85,
+      "elevation_m": 2562
+    },
+    {
+      "name": "Thangjing",
+      "type": "summit",
+      "lat": 24.4,
+      "lon": 93.85,
+      "elevation_m": 1500
+    },
+    {
+      "name": "Barak headwaters",
+      "type": "valley",
+      "lat": 24.9,
+      "lon": 93.6,
+      "elevation_m": 400
+    },
+    {
+      "name": "Imphal valley floor",
+      "type": "valley",
+      "lat": 24.75,
+      "lon": 93.9,
+      "elevation_m": 780
+    },
+    {
+      "name": "Doyang valley",
+      "type": "valley",
+      "lat": 26.15,
+      "lon": 94.2,
+      "elevation_m": 200
+    },
+    {
+      "name": "Ntangki",
+      "type": "valley",
+      "lat": 25.55,
+      "lon": 93.55,
+      "elevation_m": 200
+    },
+    {
+      "name": "Siang gorge floor",
+      "type": "valley",
+      "lat": 28.3,
+      "lon": 94.85,
+      "elevation_m": 500
+    },
+    {
+      "name": "Tali",
+      "type": "town",
+      "lat": 27.7,
+      "lon": 94.0,
+      "elevation_m": 1200
+    },
+    {
+      "name": "Nacho",
+      "type": "town",
+      "lat": 28.2,
+      "lon": 94.2,
+      "elevation_m": 1000
+    },
+    {
+      "name": "Dibang gorge",
+      "type": "valley",
+      "lat": 28.45,
+      "lon": 95.8,
+      "elevation_m": 700
+    },
+    {
+      "name": "Umngot gorge",
+      "type": "valley",
+      "lat": 25.2,
+      "lon": 92.0,
+      "elevation_m": 200
+    },
+    {
+      "name": "Simsang valley",
+      "type": "valley",
+      "lat": 25.25,
+      "lon": 90.6,
+      "elevation_m": 100
+    },
+    {
+      "name": "Diyao valley",
+      "type": "valley",
+      "lat": 25.05,
+      "lon": 92.9,
+      "elevation_m": 200
+    },
+    {
+      "name": "Borail south slope",
+      "type": "summit",
+      "lat": 24.95,
+      "lon": 92.8,
+      "elevation_m": 900
+    },
+    {
+      "name": "Kalaii Kala",
+      "type": "summit",
+      "lat": 29.05,
+      "lon": 95.95,
+      "elevation_m": 5000
+    },
+    {
+      "name": "Dapha Bum",
+      "type": "summit",
+      "lat": 27.661,
+      "lon": 96.699,
+      "elevation_m": 4578
+    },
+    {
+      "name": "Etalin",
+      "type": "town",
+      "lat": 28.61,
+      "lon": 95.76,
+      "elevation_m": 1174
+    },
+    {
+      "name": "Hunli",
+      "type": "town",
+      "lat": 28.32,
+      "lon": 95.6,
+      "elevation_m": 1104
+    },
+    {
+      "name": "Putao",
+      "type": "context",
+      "lat": 27.33,
+      "lon": 97.4,
+      "elevation_m": 500
+    },
+    {
+      "name": "Myitkyina",
+      "type": "context",
+      "lat": 25.38,
+      "lon": 97.4,
+      "elevation_m": 150
+    },
+    {
+      "name": "Kalewa",
+      "type": "context",
+      "lat": 23.19,
+      "lon": 94.3,
+      "elevation_m": 120
+    },
+    {
+      "name": "Hakha",
+      "type": "context",
+      "lat": 22.65,
+      "lon": 93.62,
+      "elevation_m": 1867
+    },
+    {
+      "name": "Falam",
+      "type": "context",
+      "lat": 22.92,
+      "lon": 93.68,
+      "elevation_m": 1600
+    },
+    {
+      "name": "Tibet plateau (Dibang north)",
+      "type": "context",
+      "lat": 29.6,
+      "lon": 95.5,
+      "elevation_m": 4800
+    },
+    {
+      "name": "Tibet plateau (Kameng north)",
+      "type": "context",
+      "lat": 28.6,
+      "lon": 92.6,
+      "elevation_m": 4600
+    }
+  ]
+}

@@ -1,285 +1,250 @@
 import { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Layers, Search } from 'lucide-react';
-import { PageHeader } from '../components/common/PageHeader';
+import { Link } from 'react-router-dom';
 import { Panel } from '../components/common/Panel';
+import { PageHeader } from '../components/common/PageHeader';
 import { DataClassTag } from '../components/common/DataClassTag';
 import { SeverityBadge } from '../components/common/SeverityBadge';
-import { EmptyState, ErrorState, LoadingRows, NoticeBanner, OfflineNotice } from '../components/common/states';
+import { KeyValue } from '../components/common/KeyValue';
+import { ErrorState, LoadingRows, OfflineNotice } from '../components/common/states';
 import { useApiData } from '../hooks/useApiData';
 import { useSystemStatus } from '../context/SystemStatusContext';
-import { getDistrictRisk } from '../services/api';
-import { formatPercent } from '../utils/format';
-import { NER_STATES } from '../constants/region';
-import type { DistrictRiskRecord } from '../types/api';
+import { getDistrictDetail, getDistricts } from '../services/api';
+import type { DistrictSummary } from '../types/api';
+import { formatCount, formatIndex, formatShare } from '../utils/format';
 
-const AVAIL_LABELS: Record<string, string> = {
-  inventory: 'INVENTORY',
-  historical: 'HISTORICAL',
-  terrain: 'TERRAIN',
-  dem: 'DEM',
-  rainfall: 'RAINFALL',
-  susceptibility: 'SUSCEPTIBILITY',
-  model: 'MODEL',
-};
+type SortKey = 'exposure' | 'risk' | 'susceptibility' | 'records';
 
-function availabilityLabel(key: string): string {
-  return AVAIL_LABELS[key.toLowerCase()] ?? key.replace(/_/g, ' ').toUpperCase();
-}
+const SORTS: Array<{ id: SortKey; label: string }> = [
+  { id: 'exposure', label: 'Exposure' },
+  { id: 'risk', label: 'Mean risk now' },
+  { id: 'susceptibility', label: 'Susceptibility' },
+  { id: 'records', label: 'Records' },
+];
 
-/** MODULE 05 — district-level intelligence. Absence of inventory records is
- * always surfaced as NO INVENTORY DATA — never silently mapped to LOW risk. */
+/** Module 04 — every district, ranked and inspectable. */
 export function DistrictIntelligence() {
   const { apiStatus } = useSystemStatus();
   const online = apiStatus === 'online';
-  const [params, setParams] = useSearchParams();
+  const [query, setQuery] = useState('');
+  const [stateFilter, setStateFilter] = useState('');
+  const [sort, setSort] = useState<SortKey>('exposure');
+  const [selected, setSelected] = useState<DistrictSummary | null>(null);
 
-  const stateFilter = params.get('state') ?? '';
-  const [search, setSearch] = useState('');
-  const [expanded, setExpanded] = useState<DistrictRiskRecord | null>(null);
-
-  const query = useApiData(
-    (signal) => getDistrictRisk(stateFilter === '' ? null : stateFilter, signal),
-    [stateFilter, online],
-    { enabled: online },
+  const districts = useApiData(online ? (s) => getDistricts(undefined, s) : null, [], { enabled: online });
+  const detail = useApiData(
+    online && selected ? (s) => getDistrictDetail(selected.state, selected.district, s) : null,
+    [selected?.state, selected?.district],
+    { enabled: online && selected !== null },
   );
 
-  const records = query.data ?? [];
+  const rows = useMemo(() => {
+    const list = districts.data ?? [];
+    const needle = query.trim().toLowerCase();
+    const filtered = list.filter((row) => {
+      if (stateFilter && row.state !== stateFilter) return false;
+      if (!needle) return true;
+      return `${row.district} ${row.state} ${row.hq}`.toLowerCase().includes(needle);
+    });
+    const key = (row: DistrictSummary) =>
+      sort === 'exposure'
+        ? row.exposure_index
+        : sort === 'risk'
+          ? row.risk_now.mean
+          : sort === 'susceptibility'
+            ? row.susceptibility.mean
+            : row.records_in_district;
+    return [...filtered].sort((a, b) => key(b) - key(a));
+  }, [districts.data, query, stateFilter, sort]);
 
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    if (!q) return records;
-    return records.filter(
-      (r) => r.district.toLowerCase().includes(q) || r.state.toLowerCase().includes(q),
-    );
-  }, [records, search]);
-
-  function setState(next: string) {
-    setExpanded(null);
-    if (next === '') {
-      params.delete('state');
-      setParams(params, { replace: true });
-    } else {
-      setParams({ state: next }, { replace: true });
-    }
-  }
-
-  const withInventory = records.filter((r) => (r.inventoryCount ?? 0) > 0).length;
+  const states = useMemo(
+    () => Array.from(new Set((districts.data ?? []).map((d) => d.state))).sort(),
+    [districts.data],
+  );
 
   return (
-    <div className="page">
+    <div className="stack">
       <PageHeader
-        module="05"
-        kicker="DISTRICT INTELLIGENCE"
-        title="State → district coverage"
-        description="Per-district historical inventory and model susceptibility as served by the backend, with explicit data-availability flags."
+        module="04"
+        kicker="Administration"
+        title="District Intelligence"
+        description="District-level summaries for all 130 district headquarters: mean susceptibility and risk, the share of cells in the high bands, records on file, and a screening exposure index."
         tags={
-          <>
-            <DataClassTag dc="historical" state={online ? 'live' : 'offline'} />
-            <DataClassTag dc="susceptibility" state={online ? 'live' : 'offline'} />
-          </>
+          districts.data ? (
+            <>
+              <span className="chip mono">{districts.data.length} districts</span>
+              <DataClassTag dc="susceptibility" state="live" />
+            </>
+          ) : null
         }
       />
 
-      <NoticeBanner tone="warn" title="Inventory gaps ≠ low risk">
-        Districts without inventory records are labelled <strong>NO INVENTORY DATA</strong>. Missing
-        records usually mean missing survey coverage, and this console never converts that absence
-        into a LOW rating.
-      </NoticeBanner>
+      {apiStatus === 'offline' && <OfflineNotice />}
 
-      <Panel
-        kicker="COVERAGE MATRIX"
-        title={stateFilter ? `Districts — ${stateFilter}` : 'All districts (backend-wide)'}
-        tools={
-          <span className="chip mono">
-            {online ? `${records.length} records · ${withInventory} with inventory` : 'offline'}
-          </span>
-        }
-      >
-        <div className="district-controls">
-          <div className="chip-row" role="group" aria-label="Filter by state">
-            <button
-              type="button"
-              className={`chip chip--filter ${stateFilter === '' ? 'is-active' : ''}`}
-              onClick={() => setState('')}
-              disabled={!online}
-            >
-              All states
-            </button>
-            {NER_STATES.map((s) => (
-              <button
-                key={s.code}
-                type="button"
-                className={`chip chip--filter ${stateFilter === s.name ? 'is-active' : ''}`}
-                onClick={() => setState(s.name)}
-                disabled={!online}
-                title={`${s.name} — state/district navigation`}
-              >
-                <span className="mono">{s.code}</span> {s.name}
-              </button>
-            ))}
-          </div>
-          <label className="district-search">
-            <Search size={14} aria-hidden="true" />
-            <input
-              className="input input--search mono"
-              placeholder="filter districts…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              disabled={!online || records.length === 0}
-            />
-          </label>
-        </div>
-
-        {!online ? (
-          <OfflineNotice
-            onRetry={() => undefined}
-          />
-        ) : query.loading ? (
-          <LoadingRows label="Loading /api/district-risk…" rows={6} />
-        ) : query.error ? (
-          <ErrorState error={query.error} onRetry={query.refetch} />
-        ) : records.length === 0 ? (
-          <EmptyState
-            icon={<Layers size={18} />}
-            title="No district records returned"
-            hint={
-              stateFilter
-                ? `GET /api/district-risk/${stateFilter} returned no parseable records. Try “All states” (GET /api/district-risk).`
-                : 'GET /api/district-risk returned no parseable records. The matrix will populate when the backend serves district data.'
+      {online && (
+        <div className="dist-layout">
+          <Panel
+            kicker="Ranking"
+            title="Districts by score"
+            className="dist-list"
+            tools={
+              <div className="row">
+                <input
+                  className="input"
+                  placeholder="Search district or HQ"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+                <select className="input" value={stateFilter} onChange={(e) => setStateFilter(e.target.value)}>
+                  <option value="">All states</option>
+                  {states.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+                <span className="seg">
+                  {SORTS.map((option) => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      className={`seg__btn ${sort === option.id ? 'is-active' : ''}`}
+                      onClick={() => setSort(option.id)}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </span>
+              </div>
             }
-          />
-        ) : (
-          <>
-            <div className="table-wrap">
-              <table className="table table--districts">
-                <thead>
-                  <tr>
-                    <th>District</th>
-                    <th>State</th>
-                    <th>Historical inventory</th>
-                    <th>Susceptibility</th>
-                    <th>Data availability</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((r) => {
-                    const hasInventory = (r.inventoryCount ?? 0) > 0;
-                    return (
+          >
+            {districts.loading && <LoadingRows rows={6} label="Loading districts" />}
+            {districts.error && <ErrorState error={districts.error} onRetry={districts.refetch} />}
+            {districts.data && (
+              <div className="table-wrap table-wrap--tall">
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>District</th>
+                      <th className="num">Susceptibility</th>
+                      <th className="num">Risk now</th>
+                      <th className="num">High+ share</th>
+                      <th className="num">Records</th>
+                      <th className="num">Exposure</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((row) => (
                       <tr
-                        key={`${r.state}-${r.district}`}
-                        className={`district-row ${expanded?.district === r.district && expanded?.state === r.state ? 'is-expanded' : ''}`}
-                        onClick={() => setExpanded((prev) => (prev === r ? null : r))}
+                        key={`${row.state}-${row.district}`}
+                        className={selected?.district === row.district && selected?.state === row.state ? 'is-selected' : ''}
                       >
-                        <td className="district-name">{r.district}</td>
-                        <td className="dim">{r.state}</td>
                         <td>
-                          {hasInventory ? (
-                            <span className="inv-count">
-                              <span className="mono">{r.inventoryCount!.toLocaleString('en-IN')}</span>
-                              <DataClassTag dc="historical" stateLabel="HISTORICAL" />
-                            </span>
-                          ) : (
-                            <span
-                              className="no-inventory-badge"
-                              title="No inventory records reported — this is not a low-risk rating"
-                            >
-                              NO INVENTORY DATA
-                            </span>
-                          )}
-                        </td>
-                        <td>
-                          {r.susceptibility ? (
-                            <span className="sus-cell">
-                              <SeverityBadge category={r.susceptibility.category} />
-                              <span className="mono">{formatPercent(r.susceptibility.probability)}</span>
-                            </span>
-                          ) : (
-                            <span className="chip chip--muted">not reported</span>
-                          )}
-                        </td>
-                        <td>
-                          <span className="avail-chips">
-                            {r.availability
-                              ? Object.entries(r.availability).map(([flag, val]) => (
-                                  <span
-                                    key={flag}
-                                    className={`avail-chip avail-chip--${val === true ? 'yes' : val === false ? 'no' : 'unknown'}`}
-                                    title={`${flag}: ${val === true ? 'available' : val === false ? 'not available' : 'not reported'}`}
-                                  >
-                                    {availabilityLabel(flag)} {val === true ? '✓' : val === false ? '✗' : '?'}
-                                  </span>
-                                ))
-                              : r.inventoryCount !== null || r.susceptibility ? (
-                                <span className="chip chip--muted">flags not reported</span>
-                              ) : (
-                                <span className="chip chip--muted">unknown</span>
-                              )}
+                          <button type="button" className="row-button" onClick={() => setSelected(row)}>
+                            {row.district}
+                          </button>
+                          <span className="table__sub">
+                            {row.state} · HQ {row.hq}
                           </span>
                         </td>
+                        <td className="num">{formatIndex(row.susceptibility.mean)}</td>
+                        <td className="num">
+                          {formatIndex(row.risk_now.mean)}
+                          <SeverityBadge category={row.risk_now.class} compact />
+                        </td>
+                        <td className="num">{formatShare(row.risk_forward.high_share)}</td>
+                        <td className="num">{row.records_in_district}</td>
+                        <td className="num">{formatCount(Math.round(row.exposure_index))}</td>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-            {filtered.length === 0 && (
-              <div className="table-footnote">no districts match “{search}” in the current view</div>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {districts.data && rows.length === 0 && (
+              <p className="prose dim">No district matches the current filter.</p>
+            )}
+          </Panel>
+
+          <aside className="dist-rail stack">
+            {!selected && (
+              <Panel kicker="Detail" title="Select a district">
+                <p className="prose dim">
+                  The table lists every district in the modelled region. Selecting one loads its cell-level summary and
+                  the analysis of its headquarters.
+                </p>
+              </Panel>
             )}
 
-            {expanded && (
-              <aside className="detail-drawer" aria-label={`Details for ${expanded.district}`}>
-                <header className="detail-drawer__head">
-                  <div>
-                    <div className="detail-drawer__district">{expanded.district}</div>
-                    <div className="detail-drawer__state dim">{expanded.state}</div>
-                  </div>
-                  <button
-                    type="button"
-                    className="btn btn--ghost btn--small"
-                    onClick={() => setExpanded(null)}
-                  >
-                    Close
-                  </button>
-                </header>
-                <div className="detail-drawer__body">
-                  {(expanded.inventoryCount ?? 0) > 0 ? (
-                    <p className="prose">
-                      Historical inventory: <strong>{expanded.inventoryCount}</strong> record(s) reported
-                      by the backend.
-                    </p>
-                  ) : (
-                    <div className="no-inventory-note">
-                      <span className="no-inventory-badge">NO INVENTORY DATA</span>
-                      <p className="prose">
-                        The backend reports no historical inventory records for this district. This
-                        does <em>not</em> imply low risk; it indicates the absence of inventory
-                        coverage in the served dataset.
-                      </p>
-                    </div>
+            {selected && (
+              <>
+                <Panel kicker={`${selected.state} · ${selected.state_code}`} title={selected.district}>
+                  {detail.loading && <LoadingRows rows={4} label="Loading district" />}
+                  {detail.error && <ErrorState error={detail.error} onRetry={detail.refetch} compact />}
+                  {detail.data && (
+                    <>
+                      <KeyValue
+                        items={[
+                          { key: 'Headquarters', value: detail.data.hq },
+                          { key: 'Population', value: formatCount(detail.data.population) },
+                          { key: 'Population estimated', value: detail.data.population_apportioned ? 'yes (post-2011 district)' : 'no (Census 2011)' },
+                          { key: 'Modelled cells', value: formatCount(detail.data.cells) },
+                          { key: 'Area (approx.)', value: `${formatCount(Math.round(detail.data.area_km2_approx))} km²` },
+                          { key: 'Mean σ', value: detail.data.uncertainty_sigma_mean.toFixed(3) },
+                        ]}
+                      />
+                      <div className="data-note">{detail.data.exposure_note}</div>
+                    </>
                   )}
-                  {expanded.susceptibility && (
-                    <p className="prose">
-                      Susceptibility:{' '}
-                      <strong>
-                        {expanded.susceptibility.category ?? 'unclassified'}
-                        {expanded.susceptibility.probability !== null
-                          ? ` · ${formatPercent(expanded.susceptibility.probability)}`
-                          : ''}
-                      </strong>{' '}
-                      — a model estimate of spatial predisposition, not a time-specific warning.
-                    </p>
-                  )}
-                  <details className="raw-json">
-                    <summary>Raw backend record</summary>
-                    <pre className="mono">{JSON.stringify(expanded.raw, null, 2)}</pre>
-                  </details>
-                </div>
-              </aside>
+                </Panel>
+
+                {detail.data && (
+                  <>
+                    <Panel kicker="Risk structure" title="Class mix inside the district">
+                      <KeyValue
+                        items={[
+                          { key: 'Mean susceptibility', value: `${formatIndex(detail.data.susceptibility.mean)} (max ${formatIndex(detail.data.susceptibility.max)})` },
+                          { key: 'Mean risk now', value: `${formatIndex(detail.data.risk_now.mean)} (max ${formatIndex(detail.data.risk_now.max)})` },
+                          { key: 'Mean risk forward', value: `${formatIndex(detail.data.risk_forward.mean)} (max ${formatIndex(detail.data.risk_forward.max)})` },
+                          { key: 'Cells in HIGH or above', value: formatShare(detail.data.risk_forward.high_share) },
+                          { key: 'Records in district', value: String(detail.data.records_in_district) },
+                          { key: 'Evidence density sum', value: detail.data.evidence_density_sum.toFixed(1) },
+                        ]}
+                      />
+                    </Panel>
+
+                    <Panel
+                      kicker="Headquarters cell"
+                      title={detail.data.hq}
+                      tools={<SeverityBadge category={detail.data.point_analysis.risk.now.class} />}
+                    >
+                      <KeyValue
+                        items={[
+                          { key: 'Risk now', value: formatIndex(detail.data.point_analysis.risk.now.value) },
+                          { key: 'Susceptibility', value: formatIndex(detail.data.point_analysis.susceptibility.index) },
+                          { key: 'Elevation', value: `${detail.data.point_analysis.terrain.elevation_m.toLocaleString('en-IN')} m` },
+                          { key: 'Gradient', value: `${detail.data.point_analysis.terrain.slope_m_per_km.toFixed(1)} m/km` },
+                          { key: 'Uncertainty', value: `σ ${detail.data.point_analysis.uncertainty.sigma.toFixed(3)} · grade ${detail.data.point_analysis.uncertainty.grade}` },
+                        ]}
+                      />
+                      <div className="data-note">
+                        Analysed at {detail.data.point_analysis.location.latitude.toFixed(4)},{' '}
+                        {detail.data.point_analysis.location.longitude.toFixed(4)} — the cell nearest the headquarters,
+                        not the district mean above.
+                      </div>
+                      <Link
+                        className="btn btn--small"
+                        to={`/location?lat=${detail.data.point_analysis.location.latitude.toFixed(4)}&lon=${detail.data.point_analysis.location.longitude.toFixed(4)}`}
+                      >
+                        Open full analysis →
+                      </Link>
+                    </Panel>
+                  </>
+                )}
+              </>
             )}
-          </>
-        )}
-      </Panel>
+          </aside>
+        </div>
+      )}
     </div>
   );
 }

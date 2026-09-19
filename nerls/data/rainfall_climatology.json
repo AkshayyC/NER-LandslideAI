@@ -1,0 +1,84 @@
+{
+  "provenance": {
+    "title": "Station rainfall climatology, North Eastern Region",
+    "kind": "compiled_reference",
+    "description": "Long-period mean annual rainfall for 30 stations plus one of six normalised monthly distribution shapes. Annual totals are the widely published IMD/state normal values; the monthly shape is assigned from the station's regional regime (Himalayan front, Meghalaya escarpment, Brahmaputra valley, Mizo-Tripura hills, Imphal valley, rain-shadow).",
+    "accuracy": "Annual totals are representative long-period means (published normals, rounded). Monthly shapes reproduce the regional regime, not station-specific monthly normals. Use for trigger *scaling*, never as an observed rainfall record.",
+    "references": [
+      "India Meteorological Department, Rainfall Normals (state and station tables)",
+      "IMD, Climate of the North Eastern Region"
+    ]
+  },
+  "month_labels": ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+  "profiles": {
+    "himalayan_front": {
+      "note": "Sikkim and Arunachal foothills; June-July maximum, negligible winter.",
+      "weights": [0.008, 0.016, 0.048, 0.088, 0.122, 0.198, 0.212, 0.168, 0.098, 0.032, 0.007, 0.003]
+    },
+    "meghalaya_escarpment": {
+      "note": "South-facing plateau scarp; the world's highest monsoon totals, June dominant with a strong pre-monsoon shoulder.",
+      "weights": [0.006, 0.012, 0.035, 0.075, 0.115, 0.235, 0.215, 0.155, 0.095, 0.045, 0.008, 0.004]
+    },
+    "brahmaputra_valley": {
+      "note": "Valley floor; flatter seasonal curve, June-August broad maximum, October retreat rain.",
+      "weights": [0.012, 0.022, 0.055, 0.105, 0.145, 0.185, 0.180, 0.145, 0.095, 0.040, 0.010, 0.006]
+    },
+    "mizo_tripura_hills": {
+      "note": "Hill ranges of the Indo-Burma belt; pronounced April-May pre-monsoon thunderstorm peak in addition to the monsoon.",
+      "weights": [0.008, 0.015, 0.055, 0.115, 0.155, 0.175, 0.165, 0.145, 0.100, 0.048, 0.012, 0.007]
+    },
+    "imphal_valley": {
+      "note": "Sheltered Manipur valley; lower totals, monsoon maximum from June.",
+      "weights": [0.010, 0.020, 0.050, 0.095, 0.140, 0.190, 0.180, 0.150, 0.100, 0.045, 0.012, 0.008]
+    },
+    "rain_shadow": {
+      "note": "Trans-Himalayan interior of Arunachal (Tawang, upper Siang); winter snowfall and a weak, flatter monsoon.",
+      "weights": [0.030, 0.040, 0.070, 0.095, 0.115, 0.130, 0.125, 0.115, 0.090, 0.085, 0.060, 0.045]
+    }
+  },
+  "stations": [
+    {"id": "sohra", "name": "Sohra (Cherrapunji)", "lat": 25.27, "lon": 91.73, "annual_mm": 11777, "profile": "meghalaya_escarpment"},
+    {"id": "mawsynram", "name": "Mawsynram", "lat": 25.30, "lon": 91.58, "annual_mm": 11872, "profile": "meghalaya_escarpment"},
+    {"id": "shillong", "name": "Shillong", "lat": 25.57, "lon": 91.88, "annual_mm": 2815, "profile": "meghalaya_escarpment"},
+    {"id": "jowai", "name": "Jowai", "lat": 25.45, "lon": 92.20, "annual_mm": 3210, "profile": "meghalaya_escarpment"},
+    {"id": "nongstoin", "name": "Nongstoin", "lat": 25.52, "lon": 91.27, "annual_mm": 3860, "profile": "meghalaya_escarpment"},
+    {"id": "tura", "name": "Tura", "lat": 25.51, "lon": 90.22, "annual_mm": 3450, "profile": "meghalaya_escarpment"},
+    {"id": "guwahati", "name": "Guwahati", "lat": 26.14, "lon": 91.74, "annual_mm": 1690, "profile": "brahmaputra_valley"},
+    {"id": "tezpur", "name": "Tezpur", "lat": 26.63, "lon": 92.80, "annual_mm": 2030, "profile": "brahmaputra_valley"},
+    {"id": "jorhat", "name": "Jorhat", "lat": 26.75, "lon": 94.22, "annual_mm": 2110, "profile": "brahmaputra_valley"},
+    {"id": "dibrugarh", "name": "Dibrugarh", "lat": 27.47, "lon": 94.91, "annual_mm": 2700, "profile": "brahmaputra_valley"},
+    {"id": "dhubri", "name": "Dhubri", "lat": 26.02, "lon": 89.98, "annual_mm": 2600, "profile": "brahmaputra_valley"},
+    {"id": "kokrajhar", "name": "Kokrajhar", "lat": 26.40, "lon": 90.27, "annual_mm": 2750, "profile": "brahmaputra_valley"},
+    {"id": "north_lakhimpur", "name": "North Lakhimpur", "lat": 27.24, "lon": 94.10, "annual_mm": 3300, "profile": "brahmaputra_valley"},
+    {"id": "dimapur", "name": "Dimapur", "lat": 25.90, "lon": 93.73, "annual_mm": 1720, "profile": "brahmaputra_valley"},
+    {"id": "silchar", "name": "Silchar", "lat": 24.82, "lon": 92.80, "annual_mm": 3000, "profile": "mizo_tripura_hills"},
+    {"id": "haflong", "name": "Haflong (Dima Hasao)", "lat": 25.17, "lon": 93.02, "annual_mm": 2310, "profile": "mizo_tripura_hills"},
+    {"id": "itanagar", "name": "Itanagar", "lat": 27.10, "lon": 93.62, "annual_mm": 3050, "profile": "himalayan_front"},
+    {"id": "pasighat", "name": "Pasighat", "lat": 28.07, "lon": 95.33, "annual_mm": 4250, "profile": "himalayan_front"},
+    {"id": "aalo", "name": "Aalo (Along)", "lat": 28.17, "lon": 94.80, "annual_mm": 3400, "profile": "himalayan_front"},
+    {"id": "tezu", "name": "Tezu", "lat": 27.92, "lon": 96.17, "annual_mm": 3950, "profile": "himalayan_front"},
+    {"id": "bomdila", "name": "Bomdila", "lat": 27.27, "lon": 92.41, "annual_mm": 1900, "profile": "himalayan_front"},
+    {"id": "tawang", "name": "Tawang", "lat": 27.59, "lon": 91.86, "annual_mm": 1050, "profile": "rain_shadow"},
+    {"id": "kohima", "name": "Kohima", "lat": 25.67, "lon": 94.11, "annual_mm": 1820, "profile": "mizo_tripura_hills"},
+    {"id": "mokokchung", "name": "Mokokchung", "lat": 26.32, "lon": 94.52, "annual_mm": 2100, "profile": "mizo_tripura_hills"},
+    {"id": "imphal", "name": "Imphal", "lat": 24.81, "lon": 93.94, "annual_mm": 1450, "profile": "imphal_valley"},
+    {"id": "aizawl", "name": "Aizawl", "lat": 23.73, "lon": 92.72, "annual_mm": 2280, "profile": "mizo_tripura_hills"},
+    {"id": "lunglei", "name": "Lunglei", "lat": 22.89, "lon": 92.73, "annual_mm": 2150, "profile": "mizo_tripura_hills"},
+    {"id": "agartala", "name": "Agartala", "lat": 23.83, "lon": 91.28, "annual_mm": 2230, "profile": "mizo_tripura_hills"},
+    {"id": "kailashahar", "name": "Kailashahar", "lat": 24.33, "lon": 92.01, "annual_mm": 2400, "profile": "mizo_tripura_hills"},
+    {"id": "gangtok", "name": "Gangtok", "lat": 27.33, "lon": 88.61, "annual_mm": 3200, "profile": "himalayan_front"},
+    {"id": "namchi", "name": "Namchi", "lat": 27.17, "lon": 88.35, "annual_mm": 2850, "profile": "himalayan_front"},
+    {"id": "mangan", "name": "Mangan", "lat": 27.51, "lon": 88.53, "annual_mm": 3600, "profile": "himalayan_front"}
+  ],
+  "trigger_reference": {
+    "note": "The trigger scale is derived from climatology, not from a fitted intensity-duration threshold: I_ref(72 h) = 3 x the mean 3-day rainfall of the wettest normal month. This is a defensible *scaling* constant that can be replaced by calibrated thresholds via the calibration module.",
+    "wet_window_days": 3,
+    "peak_month_multiplier": 3.0,
+    "season_windows": {
+      "pre_monsoon": [4, 5],
+      "southwest_monsoon": [6, 7, 8, 9],
+      "retreat_cyclonic": [10, 11],
+      "dry": [12, 1, 2, 3]
+    }
+  }
+}

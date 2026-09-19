@@ -59,3 +59,32 @@ export function formatRelativeTime(date: Date | null, now: Date = new Date()): s
 export function truncate(value: string, max = 42): string {
   return value.length > max ? `${value.slice(0, max - 1)}…` : value;
 }
+
+/** Index / risk values are shown to three decimals: enough to separate cells. */
+export function formatIndex(value: number | null | undefined, digits = 3): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return '—';
+  return value.toFixed(digits);
+}
+
+export function formatMm(value: number | null | undefined, digits = 1): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return '—';
+  if (Math.abs(value) >= 1000) return value.toFixed(0);
+  return value.toFixed(digits);
+}
+
+export function formatShare(value: number | null | undefined, digits = 1): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return '—';
+  return `${(value * 100).toFixed(digits)}%`;
+}
+
+/** Signed change, for the forward-risk delta. */
+export function formatSigned(value: number | null | undefined, digits = 3): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return '—';
+  const sign = value > 0 ? '+' : '';
+  return `${sign}${value.toFixed(digits)}`;
+}
+
+export function formatKm(value: number | null | undefined, digits = 1): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return '—';
+  return `${value.toFixed(digits)} km`;
+}

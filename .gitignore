@@ -14,16 +14,31 @@ env/
 # Environment variables
 .env
 
-# Large/raw datasets
+# Node / frontend build
+node_modules/
+frontend/dist/
+.vite/
+
+# Test and tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Generated data: the grid cache is rebuilt from `nerls/data/` on first run,
+# and user imports are local to a deployment.
+data/cache/
+data/user/
 data/raw/*
 data/processed/*
+
+# Rasters and model artifacts (user-supplied; never committed)
 *.tif
 *.tiff
 *.hdf
 *.h5
 *.nc
-
-# Model artifacts
 *.pkl
 *.joblib
 
@@ -33,3 +48,4 @@ Thumbs.db
 
 # IDE
 .vscode/
+.idea/
